@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1>Crystal Castles</h1>
+<h3>Air War</h3>
+
+<audio controls src="./audio/Air War.mp3"></audio>
+<br><br>
+
+<button onclick="downloadFile()">⬇ Скачать</button>
+
+<script>
+function downloadFile() {
+  // создаём скрытую ссылку
+  const link = document.createElement("a");
+  link.href = "./audio/Air War.mp3"; // путь к вашему файлу
+  link.download = "Air War.mp3";     // имя файла при сохранении
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+</script>
+    
+</body>
+</html>
