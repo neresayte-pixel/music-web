@@ -1,0 +1,36 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover; 
+  z-index: -1;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
+  font-family: Arial, sans-serif;
+  margin-top: 20%;
+}
+
+.button{
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    background-color: white;
+    border: white;
+    padding: 15px;
+    border-radius: 15px;
+}
