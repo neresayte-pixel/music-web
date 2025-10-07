@@ -34,3 +34,8 @@ body, html {
     padding: 15px;
     border-radius: 15px;
 }
+
+.button:hover{
+padding: 12px;
+transition: linear 0.3s;
+}
