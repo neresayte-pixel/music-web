@@ -5,6 +5,7 @@
 }
 
 body{
+    background-image: url(./photo/176024-anime-illustration-class_101_llc-gelbooru-danbooru-1920x1080.jpg);
     background-color: black;
 }
 
@@ -19,13 +20,28 @@ body{
 .card{
     background-color: white;
     border-radius: 20px;
-    padding: 25px;
+    padding: 45px;
     width: 250px;
+}
+
+.card img{
+    border-radius: 75px;
+    width: 130px;
+}
+
+.card a{
+    text-decoration: none;
+    color: gray;
+    border: 2px solid black;
+    border-radius: 40px;
+    padding: 10px 15px;
+   position: relative;
+   top: 20px;
 }
 
 a{
     text-decoration: none;
-    color white;
+    color: white;
 }
 
 .content{
