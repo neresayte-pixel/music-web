@@ -39,3 +39,64 @@ body, html {
 padding: 12px;
 transition: linear 0.3s;
 }
+
+
+/* === Сброс базовых отступов и шрифтов === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* === Основной стиль страницы === */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+/* === Видео на заднем фоне === */
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* === Контент поверх видео === */
+.content {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.45); /* затемнение для читаемости */
+  padding: 20px 30px;
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+}
+
+h1 {
+  font-size: 75px;
+  margin-bottom: 25px;
+}
+
+.button {
+  display: inline-block;
+  text-decoration: none;
+  background: #ff2e63;
+  color: #fff;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.button:hover {
+  background: #ff527a;
+}
+
+/* === 📱 Ад*
