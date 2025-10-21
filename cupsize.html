@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Пошлая Молли Playlist</title>
+<title>CUPSIZE Playlist</title>
 <style>
   body {
     font-family: sans-serif;
@@ -26,7 +26,7 @@
   }
 
   .song-btn {
-    background: #e63946; /* 🔴 красный */
+    background: #1DB954;
     border: none;
     color: white;
     font-size: 18px;
@@ -40,11 +40,11 @@
     text-align: center;
   }
   .song-btn:hover {
-    background: #d62828; /* темнее при наведении */
+    background: #17a84b;
     transform: scale(1.05);
   }
 
-  /* Плеер */
+  /* ПЛЕЕР */
   .mini-player {
     position: fixed;
     bottom: 12px;
@@ -86,7 +86,7 @@
   .mp-seek::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 14px; height: 14px; border-radius: 50%;
-    background: #e63946; /* 🔴 ползунок тоже красный */
+    background: #1DB954;
   }
   .mp-time { display: flex; justify-content: space-between; font-size: 11px; color: #b5b5b5; }
   .mp-controls { display: flex; gap: 8px; align-items: center; }
@@ -97,7 +97,7 @@
     transition: transform .1s ease, background .2s ease;
   }
   .mp-btn:active { transform: scale(.95); }
-  .mp-play.playing { background: #e63946; } /* 🔴 активная кнопка — красная */
+  .mp-play.playing { background: #1DB954; }
 
   @media (max-width: 480px) {
     .mini-player { grid-template-columns: 48px 1fr auto; padding: 8px 10px; }
@@ -109,25 +109,26 @@
 </style>
 </head>
 <body>
-
-<h1>🎧 Пошлая Молли Playlist</h1>
+<a style="text-decoration: none; color: rgb(255, 255, 255); font-size: 30px;" href="music.html">НАЗАД</a>
+<h1>🎧 CUPSIZE Playlist</h1>
 <div class="song-list">
-  <button class="song-btn" data-src="../audio/Пошлая Молли - Ты разбила папину машину.mp3">Пошлая Молли — Ты разбила папину машину</button>
-  <button class="song-btn" data-src="../audio/Пошлая Молли - Супермаркет(slowed & reverb).mp3">Пошлая Молли — Супермаркет (slowed & reverb)</button>
-  <button class="song-btn" data-src="../audio/Пошлая Молли - Стрип клаб.mp3">Пошлая Молли — Стрип клаб</button>
-  <button class="song-btn" data-src="../audio/Пошлая Молли - Мишка (feat. KATERINA).mp3">Пошлая Молли — Мишка (feat. KATERINA)</button>
-  <button class="song-btn" data-src="../audio/Пошлая Молли - Беспечный рыцарь тьмы.mp3">Пошлая Молли — Беспечный рыцарь тьмы</button>
-  <button class="song-btn" data-src="../audio/Пошлая Молли - Клеопатри.mp3">Пошлая Молли — Клеопатри</button>
-  <button class="song-btn" data-src="../audio/Пошлая Молли - Дом Периньон (feat. Элджей).mp3">Пошлая Молли — Дом Периньон (feat. Элджей)</button>
-  <button class="song-btn" data-src="../audio/Пошлая Молли - Буду песиком.mp3">Пошлая Молли — Буду песиком</button>
-  <button class="song-btn" data-src="../audio/Пошлая Молли - Контракт.mp3">Пошлая Молли — Контракт</button>
+  <button class="song-btn" data-src="./audio/CUPSIZE - мне похуй.mp3" data-title="CUPSIZE — мне похуй" data-artist="Cupsize">CUPSIZE — мне похуй</button>
+  <button class="song-btn" data-src="./audio/CUPSIZE - вайфуу.mp3" data-title="CUPSIZE — вайфуу" data-artist="Cupsize">CUPSIZE — вайфуу</button>
+  <button class="song-btn" data-src="./audio/CUPSIZE - Вирус.mp3" data-title="CUPSIZE — Вирус" data-artist="Cupsize">CUPSIZE — Вирус</button>
+  <button class="song-btn" data-src="./audio/CUPSIZE - Забуду.mp3" data-title="CUPSIZE — Забуду" data-artist="Cupsize">CUPSIZE — Забуду</button>
+  <button class="song-btn" data-src="./audio/CUPSIZE - лиза, настя.mp3" data-title="CUPSIZE — лиза, настя" data-artist="Cupsize">CUPSIZE — лиза, настя</button>
+  <button class="song-btn" data-src="./audio/CUPSIZE - люби меня, алина.mp3" data-title="CUPSIZE — люби меня, алина" data-artist="Cupsize">CUPSIZE — люби меня, алина</button>
+  <button class="song-btn" data-src="./audio/CUPSIZE - Ты любишь танцевать.mp3" data-title="CUPSIZE — Ты любишь танцевать" data-artist="Cupsize">CUPSIZE — Ты любишь танцевать</button>
+  <button class="song-btn" data-src="./audio/CUPSIZE - Ты любишь травку.mp3" data-title="CUPSIZE — Ты любишь травку" data-artist="Cupsize">CUPSIZE — Ты любишь травку</button>
+  <button class="song-btn" data-src="./audio/CUPSIZE - Я схожу с ума.mp3" data-title="CUPSIZE — Я схожу с ума" data-artist="Cupsize">CUPSIZE — Я схожу с ума</button>
 </div>
 
+<!-- Плеер -->
 <div class="mini-player" id="player">
   <img class="mp-cover" src="cover.jpg" alt="cover">
   <div class="mp-center">
     <div class="mp-title">—</div>
-    <div class="mp-artist">Пошлая Молли</div>
+    <div class="mp-artist">—</div>
     <input type="range" class="mp-seek" min="0" max="100" value="0" step="0.1">
     <div class="mp-time"><span class="mp-current">0:00</span><span class="mp-duration">0:00</span></div>
   </div>
@@ -158,13 +159,17 @@
     return `${m}:${ss}`;
   };
 
+  // Клик по песне
   songs.forEach((btn, index) => {
     btn.addEventListener('click', () => {
       const src = btn.dataset.src;
-      const t = btn.textContent;
+      const t = btn.dataset.title;
+      const a = btn.dataset.artist;
+
       currentIndex = index;
       audio.src = src;
       title.textContent = t;
+      artist.textContent = a;
       player.classList.add('visible');
       audio.play();
       playBtn.textContent = '⏸';
@@ -172,6 +177,7 @@
     });
   });
 
+  // Управление
   playBtn.addEventListener('click', async () => {
     if (audio.paused) {
       await audio.play();
@@ -205,10 +211,12 @@
     dur.textContent = fmt(audio.duration);
   });
 
+  // Автопереход к следующей песне
   audio.addEventListener('ended', () => {
     currentIndex++;
     if (currentIndex < songs.length) {
-      songs[currentIndex].click();
+      const next = songs[currentIndex];
+      next.click(); // запуск следующей
     } else {
       playBtn.textContent = '▶';
       playBtn.classList.remove('playing');

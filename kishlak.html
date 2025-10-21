@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CUPSIZE Playlist</title>
+<title>Кишлак Playlist</title>
 <style>
   body {
     font-family: sans-serif;
@@ -26,7 +26,7 @@
   }
 
   .song-btn {
-    background: #1DB954;
+    background: #ff69b4; /* 💖 розовый */
     border: none;
     color: white;
     font-size: 18px;
@@ -40,11 +40,11 @@
     text-align: center;
   }
   .song-btn:hover {
-    background: #17a84b;
+    background: #ff4fa3; /* чуть темнее при наведении */
     transform: scale(1.05);
   }
 
-  /* ПЛЕЕР */
+  /* Плеер */
   .mini-player {
     position: fixed;
     bottom: 12px;
@@ -86,7 +86,7 @@
   .mp-seek::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 14px; height: 14px; border-radius: 50%;
-    background: #1DB954;
+    background: #ff69b4; /* 💖 ползунок */
   }
   .mp-time { display: flex; justify-content: space-between; font-size: 11px; color: #b5b5b5; }
   .mp-controls { display: flex; gap: 8px; align-items: center; }
@@ -97,7 +97,7 @@
     transition: transform .1s ease, background .2s ease;
   }
   .mp-btn:active { transform: scale(.95); }
-  .mp-play.playing { background: #1DB954; }
+  .mp-play.playing { background: #ff69b4; } /* 💖 активная кнопка */
 
   @media (max-width: 480px) {
     .mini-player { grid-template-columns: 48px 1fr auto; padding: 8px 10px; }
@@ -109,26 +109,19 @@
 </style>
 </head>
 <body>
-
-<h1>🎧 CUPSIZE Playlist</h1>
+<a style="text-decoration: none; color: rgb(255, 255, 255); font-size: 30px;" href="music.html">НАЗАД</a>
+<h1>🎧 Кишлак Playlist</h1>
 <div class="song-list">
-  <button class="song-btn" data-src="./audio/CUPSIZE - мне похуй.mp3" data-title="CUPSIZE — мне похуй" data-artist="Cupsize">CUPSIZE — мне похуй</button>
-  <button class="song-btn" data-src="./audio/CUPSIZE - вайфуу.mp3" data-title="CUPSIZE — вайфуу" data-artist="Cupsize">CUPSIZE — вайфуу</button>
-  <button class="song-btn" data-src="./audio/CUPSIZE - Вирус.mp3" data-title="CUPSIZE — Вирус" data-artist="Cupsize">CUPSIZE — Вирус</button>
-  <button class="song-btn" data-src="./audio/CUPSIZE - Забуду.mp3" data-title="CUPSIZE — Забуду" data-artist="Cupsize">CUPSIZE — Забуду</button>
-  <button class="song-btn" data-src="./audio/CUPSIZE - лиза, настя.mp3" data-title="CUPSIZE — лиза, настя" data-artist="Cupsize">CUPSIZE — лиза, настя</button>
-  <button class="song-btn" data-src="./audio/CUPSIZE - люби меня, алина.mp3" data-title="CUPSIZE — люби меня, алина" data-artist="Cupsize">CUPSIZE — люби меня, алина</button>
-  <button class="song-btn" data-src="./audio/CUPSIZE - Ты любишь танцевать.mp3" data-title="CUPSIZE — Ты любишь танцевать" data-artist="Cupsize">CUPSIZE — Ты любишь танцевать</button>
-  <button class="song-btn" data-src="./audio/CUPSIZE - Ты любишь травку.mp3" data-title="CUPSIZE — Ты любишь травку" data-artist="Cupsize">CUPSIZE — Ты любишь травку</button>
-  <button class="song-btn" data-src="./audio/CUPSIZE - Я схожу с ума.mp3" data-title="CUPSIZE — Я схожу с ума" data-artist="Cupsize">CUPSIZE — Я схожу с ума</button>
+  <button class="song-btn" data-src="./audio/Kishlak_-_Ej_bez_mata_by_lambo_(SkySound.cc).mp3">Кишлак — Ей без мата</button>
+  <button class="song-btn" data-src="./audio/Кишлак - Самый лучший день.mp3">Кишлак — Самый лучший день</button>
+  <button class="song-btn" data-src="./audio/Кишлак - Я уёбываю в джаз.mp3">Кишлак — Я уёбываю в джаз</button>
 </div>
 
-<!-- Плеер -->
 <div class="mini-player" id="player">
   <img class="mp-cover" src="cover.jpg" alt="cover">
   <div class="mp-center">
     <div class="mp-title">—</div>
-    <div class="mp-artist">—</div>
+    <div class="mp-artist">Кишлак</div>
     <input type="range" class="mp-seek" min="0" max="100" value="0" step="0.1">
     <div class="mp-time"><span class="mp-current">0:00</span><span class="mp-duration">0:00</span></div>
   </div>
@@ -159,17 +152,13 @@
     return `${m}:${ss}`;
   };
 
-  // Клик по песне
   songs.forEach((btn, index) => {
     btn.addEventListener('click', () => {
       const src = btn.dataset.src;
-      const t = btn.dataset.title;
-      const a = btn.dataset.artist;
-
+      const t = btn.textContent;
       currentIndex = index;
       audio.src = src;
       title.textContent = t;
-      artist.textContent = a;
       player.classList.add('visible');
       audio.play();
       playBtn.textContent = '⏸';
@@ -177,7 +166,6 @@
     });
   });
 
-  // Управление
   playBtn.addEventListener('click', async () => {
     if (audio.paused) {
       await audio.play();
@@ -211,12 +199,10 @@
     dur.textContent = fmt(audio.duration);
   });
 
-  // Автопереход к следующей песне
   audio.addEventListener('ended', () => {
     currentIndex++;
     if (currentIndex < songs.length) {
-      const next = songs[currentIndex];
-      next.click(); // запуск следующей
+      songs[currentIndex].click();
     } else {
       playBtn.textContent = '▶';
       playBtn.classList.remove('playing');
