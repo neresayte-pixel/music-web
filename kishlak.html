@@ -67,6 +67,19 @@
     transition: all 0.4s ease;
     z-index: 9999;
   }
+
+    .btrs{
+  position: absolute;
+  top: 30px;   
+  right: 40px; 
+  font-size: 28px;
+  }
+
+  .btrs a{
+      text-decoration: none;
+  color: white;
+  }
+
   .mini-player.visible {
     opacity: 1;
     pointer-events: auto;
@@ -118,7 +131,7 @@
 </div>
 
 <div class="mini-player" id="player">
-  <img class="mp-cover" src="cover.jpg" alt="cover">
+  <img class="mp-cover" src="./photo/2cf4dbb354f3022140b487958d6a4c5f.1000x1000x1.png" alt="cover">
   <div class="mp-center">
     <div class="mp-title">—</div>
     <div class="mp-artist">Кишлак</div>
@@ -130,6 +143,10 @@
     <button class="mp-btn mp-mute" aria-label="mute">🔊</button>
   </div>
   <audio id="mp-audio" preload="metadata"></audio>
+</div>
+
+<div class="btrs">
+<a href="shadowraze.html">СЛЕДУЮЩИЙ ИСПОЛНИТЕЛЬ</a>
 </div>
 
 <script>

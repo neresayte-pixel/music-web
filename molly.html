@@ -26,7 +26,7 @@
   }
 
   .song-btn {
-    background: #e63946; /* 🔴 красный */
+    background: #e63946;
     border: none;
     color: white;
     font-size: 18px;
@@ -40,11 +40,10 @@
     text-align: center;
   }
   .song-btn:hover {
-    background: #d62828; /* темнее при наведении */
+    background: #d62828;
     transform: scale(1.05);
   }
 
-  /* Плеер */
   .mini-player {
     position: fixed;
     bottom: 12px;
@@ -67,6 +66,19 @@
     transition: all 0.4s ease;
     z-index: 9999;
   }
+
+  .btrs{
+  position: absolute;
+  top: 30px;   
+  right: 40px; 
+  font-size: 28px;
+  }
+
+  .btrs a{
+      text-decoration: none;
+  color: white;
+  }
+
   .mini-player.visible {
     opacity: 1;
     pointer-events: auto;
@@ -86,7 +98,7 @@
   .mp-seek::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 14px; height: 14px; border-radius: 50%;
-    background: #e63946; /* 🔴 ползунок тоже красный */
+    background: #e63946;
   }
   .mp-time { display: flex; justify-content: space-between; font-size: 11px; color: #b5b5b5; }
   .mp-controls { display: flex; gap: 8px; align-items: center; }
@@ -97,7 +109,7 @@
     transition: transform .1s ease, background .2s ease;
   }
   .mp-btn:active { transform: scale(.95); }
-  .mp-play.playing { background: #e63946; } /* 🔴 активная кнопка — красная */
+  .mp-play.playing { background: #e63946; }
 
   @media (max-width: 480px) {
     .mini-player { grid-template-columns: 48px 1fr auto; padding: 8px 10px; }
@@ -111,6 +123,7 @@
 <body>
 <a style="text-decoration: none; color: rgb(255, 255, 255); font-size: 30px;" href="music.html">НАЗАД</a>
 <h1>🎧 Пошлая Молли Playlist</h1>
+
 <div class="song-list">
   <button class="song-btn" data-src="./audio/Пошлая Молли - Ты разбила папину машину.mp3">Пошлая Молли — Ты разбила папину машину</button>
   <button class="song-btn" data-src="./audio/Пошлая Молли - Супермаркет(slowed & reverb).mp3">Пошлая Молли — Супермаркет (slowed & reverb)</button>
@@ -121,11 +134,17 @@
   <button class="song-btn" data-src="./audio/Пошлая Молли - Дом Периньон (feat. Элджей).mp3">Пошлая Молли — Дом Периньон (feat. Элджей)</button>
   <button class="song-btn" data-src="./audio/Пошлая Молли - Буду песиком.mp3">Пошлая Молли — Буду песиком</button>
   <button class="song-btn" data-src="./audio/Пошлая Молли - Контракт.mp3">Пошлая Молли — Контракт</button>
+
+  <!-- ✅ Новые добавленные треки -->
+  <button class="song-btn" data-src="./audio/Пошлая Молли feat. Молодой Платон - Школьник.mp3">Пошлая Молли feat. Молодой Платон — Школьник</button>
+  <button class="song-btn" data-src="./audio/Пошлая Молли - Ханнамонтана.mp3">Пошлая Молли — Ханнамонтана</button>
+  <button class="song-btn" data-src="./audio/Пошлая Молли - Нон стоп.mp3">Пошлая Молли — Нон стоп</button>
+  <button class="song-btn" data-src="./audio/Пошлая Молли - Значит дружба.mp3">Пошлая Молли — Значит дружба</button>
+  <button class="song-btn" data-src="./audio/Пошлая Молли - Райские цветы.mp3">Пошлая Молли — Райские цветы</button>
 </div>
 
-
 <div class="mini-player" id="player">
-  <img class="mp-cover" src="cover.jpg" alt="cover">
+  <img class="mp-cover" src="./photo/images.jpg" alt="cover">
   <div class="mp-center">
     <div class="mp-title">—</div>
     <div class="mp-artist">Пошлая Молли</div>
@@ -139,6 +158,9 @@
   <audio id="mp-audio" preload="metadata"></audio>
 </div>
 
+<div class="btrs">
+<a href="kishlak.html">СЛЕДУЮЩИЙ ИСПОЛНИТЕЛЬ</a>
+</div>
 <script>
   const songs = Array.from(document.querySelectorAll('.song-btn'));
   const player = document.getElementById('player');

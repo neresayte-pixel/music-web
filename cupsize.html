@@ -44,6 +44,18 @@
     transform: scale(1.05);
   }
 
+  .btrs{
+  position: absolute;
+  top: 30px;   
+  right: 40px; 
+  font-size: 28px;
+  }
+
+  .btrs a{
+      text-decoration: none;
+  color: white;
+  }
+
   /* ПЛЕЕР */
   .mini-player {
     position: fixed;
@@ -125,7 +137,7 @@
 
 <!-- Плеер -->
 <div class="mini-player" id="player">
-  <img class="mp-cover" src="cover.jpg" alt="cover">
+  <img class="mp-cover" src="./photo/cupsize.jpg" alt="cover">
   <div class="mp-center">
     <div class="mp-title">—</div>
     <div class="mp-artist">—</div>
@@ -138,7 +150,9 @@
   </div>
   <audio id="mp-audio" preload="metadata"></audio>
 </div>
-
+<div class="btrs">
+<a href="molly.html">СЛЕДУЮЩИЙ ИСПОЛНИТЕЛЬ</a>
+</div>
 <script>
   const songs = Array.from(document.querySelectorAll('.song-btn'));
   const player = document.getElementById('player');
