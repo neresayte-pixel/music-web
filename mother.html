@@ -40,7 +40,29 @@
     text-align: center;
   }
   .song-btn:hover {
-    background: #005fcc; /* темнее при наведении */
+    background: #005fcc;
+    transform: scale(1.05);
+  }
+
+  /* 🔘 Фото под плейлистом */
+  .bottom-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    margin-bottom: 100px;
+  }
+
+  .bottom-photo img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+  }
+
+  .bottom-photo img:hover {
     transform: scale(1.05);
   }
 
@@ -74,15 +96,15 @@
   }
 
   .btrs{
-  position: absolute;
-  top: 30px;   
-  right: 40px; 
-  font-size: 28px;
+    position: absolute;
+    top: 30px;   
+    right: 40px; 
+    font-size: 28px;
   }
 
   .btrs a{
-      text-decoration: none;
-  color: white;
+    text-decoration: none;
+    color: white;
   }
 
   .mp-cover {
@@ -91,6 +113,7 @@
   .mp-center { min-width: 0; }
   .mp-title { font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .mp-artist { font-size: 12px; color: #b5b5b5; margin-top: 2px; }
+
   .mp-seek {
     -webkit-appearance: none;
      appearance: none;          
@@ -101,6 +124,7 @@
     width: 14px; height: 14px; border-radius: 50%;
     background: #007bff; /* 🔵 ползунок */
   }
+
   .mp-time { display: flex; justify-content: space-between; font-size: 11px; color: #b5b5b5; }
   .mp-controls { display: flex; gap: 8px; align-items: center; }
   .mp-btn {
@@ -110,7 +134,7 @@
     transition: transform .1s ease, background .2s ease;
   }
   .mp-btn:active { transform: scale(.95); }
-  .mp-play.playing { background: #007bff; } /* 🔵 активная кнопка */
+  .mp-play.playing { background: #007bff; }
 
   @media (max-width: 480px) {
     .mini-player { grid-template-columns: 48px 1fr auto; padding: 8px 10px; }
@@ -136,8 +160,14 @@
   <button class="song-btn" data-src="./audio/Полматери - Псы Попадут В Рай.mp3">Полматери — Псы Попадут В Рай</button>
 </div>
 
+<!-- 🔘 Округлённая фотография -->
+<div class="bottom-photo">
+  <img src="./photo/5cc2927fcf61cf10d3eb5efe35abde33.1000x1000x1.png" alt="Полматери">
+  <!-- ↑ Здесь укажи путь к фото -->
+</div>
+
 <div class="mini-player" id="player">
-  <img class="mp-cover" src="./photo/5cc2927fcf61cf10d3eb5efe35abde33.1000x1000x1.png" alt="cover">
+  <img class="mp-cover" src="./photo/mother.jpg" alt="cover">
   <div class="mp-center">
     <div class="mp-title">—</div>
     <div class="mp-artist">Полматери</div>
@@ -152,7 +182,8 @@
 </div>
 
 <div class="btrs">
-<a href="cupsize.html">СЛЕДУЮЩИЙ</a>
+  <a href="cupsize.html">СЛЕДУЮЩИЙ</a>
+  <!-- ↑ Здесь укажи путь к следующему исполнителю -->
 </div>
 
 <script>
@@ -227,8 +258,8 @@
     if (currentIndex < songs.length) {
       songs[currentIndex].click();
     } else {
-      playBtn.textContent = '▶';
-      playBtn.classList.remove('playing');
+      // ✅ переход на следующего исполнителя после последней песни
+      window.location.href = "cupsize.html";
     }
   });
 </script>

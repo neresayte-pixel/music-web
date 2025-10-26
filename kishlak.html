@@ -40,7 +40,29 @@
     text-align: center;
   }
   .song-btn:hover {
-    background: #ff4fa3; /* чуть темнее при наведении */
+    background: #ff4fa3;
+    transform: scale(1.05);
+  }
+
+  /* 🔘 Фото под плейлистом */
+  .bottom-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    margin-bottom: 100px;
+  }
+
+  .bottom-photo img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+  }
+
+  .bottom-photo img:hover {
     transform: scale(1.05);
   }
 
@@ -68,16 +90,16 @@
     z-index: 9999;
   }
 
-    .btrs{
-  position: absolute;
-  top: 30px;   
-  right: 40px; 
-  font-size: 28px;
+  .btrs{
+    position: absolute;
+    top: 30px;   
+    right: 40px; 
+    font-size: 28px;
   }
 
   .btrs a{
-      text-decoration: none;
-  color: white;
+    text-decoration: none;
+    color: white;
   }
 
   .mini-player.visible {
@@ -99,7 +121,7 @@
   .mp-seek::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 14px; height: 14px; border-radius: 50%;
-    background: #ff69b4; /* 💖 ползунок */
+    background: #ff69b4;
   }
   .mp-time { display: flex; justify-content: space-between; font-size: 11px; color: #b5b5b5; }
   .mp-controls { display: flex; gap: 8px; align-items: center; }
@@ -110,7 +132,7 @@
     transition: transform .1s ease, background .2s ease;
   }
   .mp-btn:active { transform: scale(.95); }
-  .mp-play.playing { background: #ff69b4; } /* 💖 активная кнопка */
+  .mp-play.playing { background: #ff69b4; }
 
   @media (max-width: 480px) {
     .mini-player { grid-template-columns: 48px 1fr auto; padding: 8px 10px; }
@@ -124,14 +146,21 @@
 <body>
 <a style="text-decoration: none; color: rgb(255, 255, 255); font-size: 30px;" href="music.html">НАЗАД</a>
 <h1>🎧 Кишлак Playlist</h1>
+
 <div class="song-list">
   <button class="song-btn" data-src="./audio/Kishlak_-_Ej_bez_mata_by_lambo_(SkySound.cc).mp3">Кишлак — Ей без мата</button>
   <button class="song-btn" data-src="./audio/Кишлак - Самый лучший день.mp3">Кишлак — Самый лучший день</button>
   <button class="song-btn" data-src="./audio/Кишлак - Я уёбываю в джаз.mp3">Кишлак — Я уёбываю в джаз</button>
 </div>
 
+<!-- 🔘 Округлённая фотография -->
+<div class="bottom-photo">
+  <img src="./photo/2cf4dbb354f3022140b487958d6a4c5f.1000x1000x1.png" alt="Кишлак">
+  <!-- ↑ Здесь укажи путь к фото -->
+</div>
+
 <div class="mini-player" id="player">
-  <img class="mp-cover" src="./photo/2cf4dbb354f3022140b487958d6a4c5f.1000x1000x1.png" alt="cover">
+  <img class="mp-cover" src="./photo/kishlak.jpg" alt="cover">
   <div class="mp-center">
     <div class="mp-title">—</div>
     <div class="mp-artist">Кишлак</div>
@@ -145,8 +174,10 @@
   <audio id="mp-audio" preload="metadata"></audio>
 </div>
 
+<!-- 🔗 Кнопка перехода -->
 <div class="btrs">
-<a href="shadowraze.html">СЛЕДУЮЩИЙ</a>
+  <a href="shadowraze.html">СЛЕДУЮЩИЙ</a>
+  <!-- ↑ Здесь укажи путь к следующему исполнителю -->
 </div>
 
 <script>
@@ -221,8 +252,8 @@
     if (currentIndex < songs.length) {
       songs[currentIndex].click();
     } else {
-      playBtn.textContent = '▶';
-      playBtn.classList.remove('playing');
+      // ✅ после последней песни переход на следующего исполнителя
+      window.location.href = "shadowraze.html";
     }
   });
 </script>

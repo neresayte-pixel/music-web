@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CUPSIZE Playlist</title>
+<link rel="icon" type="image/png" href="./photo/icon.png">
 <style>
   body {
     font-family: sans-serif;
@@ -56,20 +57,20 @@
     color: white;
   }
 
-  /* Фото под плейлистом */
+  /* Фото */
   .bottom-photo {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 60px;
-    margin-bottom: 100px; /* чтобы не перекрывало плеер */
+    margin-bottom: 100px;
   }
 
   .bottom-photo img {
-    width: 250px;          /* размер */
+    width: 250px;
     height: 250px;
-    border-radius: 50%;    /* делает фото круглым */
-    object-fit: cover;     /* чтобы не искажалось */
+    border-radius: 50%;
+    object-fit: cover;
     box-shadow: 0 0 25px rgba(0,0,0,0.5);
     transition: transform 0.3s ease;
   }
@@ -78,7 +79,7 @@
     transform: scale(1.05);
   }
 
-  /* ПЛЕЕР */
+  /* Плеер */
   .mini-player {
     position: fixed;
     bottom: 12px;
@@ -145,6 +146,7 @@
 <body>
 <a style="text-decoration: none; color: rgb(255, 255, 255); font-size: 30px;" href="music.html">НАЗАД</a>
 <h1>🎧 CUPSIZE Playlist</h1>
+
 <div class="song-list">
   <button class="song-btn" data-src="./audio/CUPSIZE - мне похуй.mp3" data-title="CUPSIZE — мне похуй" data-artist="Cupsize">CUPSIZE — мне похуй</button>
   <button class="song-btn" data-src="./audio/CUPSIZE - вайфуу.mp3" data-title="CUPSIZE — вайфуу" data-artist="Cupsize">CUPSIZE — вайфуу</button>
@@ -157,14 +159,10 @@
   <button class="song-btn" data-src="./audio/CUPSIZE - Я схожу с ума.mp3" data-title="CUPSIZE — Я схожу с ума" data-artist="Cupsize">CUPSIZE — Я схожу с ума</button>
 </div>
 
-<!-- ✅ ВОТ СЮДА ВСТАВЬ СВОЙ ПУТЬ К ФОТО -->
 <div class="bottom-photo">
   <img src="./photo/cupsize.jpg" alt="CUPSIZE photo">
-  <!-- ↑ Укажи путь к своей фотографии здесь -->
 </div>
-<!-- ✅ КОНЕЦ ФОТО -->
 
-<!-- Плеер -->
 <div class="mini-player" id="player">
   <img class="mp-cover" src="./photo/cupsize.jpg" alt="cover">
   <div class="mp-center">
@@ -179,92 +177,89 @@
   </div>
   <audio id="mp-audio" preload="metadata"></audio>
 </div>
-<div class="btrs">
-<a href="molly.html">СЛЕДУЮЩИЙ</a>
-</div>
+
 <script>
-  const songs = Array.from(document.querySelectorAll('.song-btn'));
-  const player = document.getElementById('player');
-  const audio = document.getElementById('mp-audio');
-  const playBtn = document.querySelector('.mp-play');
-  const muteBtn = document.querySelector('.mp-mute');
-  const seek = document.querySelector('.mp-seek');
-  const cur = document.querySelector('.mp-current');
-  const dur = document.querySelector('.mp-duration');
-  const title = document.querySelector('.mp-title');
-  const artist = document.querySelector('.mp-artist');
-  let currentIndex = 0;
+const songs = Array.from(document.querySelectorAll('.song-btn'));
+const player = document.getElementById('player');
+const audio = document.getElementById('mp-audio');
+const playBtn = document.querySelector('.mp-play');
+const muteBtn = document.querySelector('.mp-mute');
+const seek = document.querySelector('.mp-seek');
+const cur = document.querySelector('.mp-current');
+const dur = document.querySelector('.mp-duration');
+const title = document.querySelector('.mp-title');
+const artist = document.querySelector('.mp-artist');
+let currentIndex = 0;
 
-  const fmt = s => {
-    if (isNaN(s)) return '0:00';
-    const m = Math.floor(s / 60);
-    const ss = Math.floor(s % 60).toString().padStart(2,'0');
-    return `${m}:${ss}`;
-  };
+const fmt = s => {
+  if (isNaN(s)) return '0:00';
+  const m = Math.floor(s / 60);
+  const ss = Math.floor(s % 60).toString().padStart(2,'0');
+  return `${m}:${ss}`;
+};
 
-  // Клик по песне
-  songs.forEach((btn, index) => {
-    btn.addEventListener('click', () => {
-      const src = btn.dataset.src;
-      const t = btn.dataset.title;
-      const a = btn.dataset.artist;
+// Клик по песне
+songs.forEach((btn, index) => {
+  btn.addEventListener('click', () => {
+    const src = btn.dataset.src;
+    const t = btn.dataset.title;
+    const a = btn.dataset.artist;
 
-      currentIndex = index;
-      audio.src = src;
-      title.textContent = t;
-      artist.textContent = a;
-      player.classList.add('visible');
-      audio.play();
-      playBtn.textContent = '⏸';
-      playBtn.classList.add('playing');
-    });
+    currentIndex = index;
+    audio.src = src;
+    title.textContent = t;
+    artist.textContent = a;
+    player.classList.add('visible');
+    audio.play();
+    playBtn.textContent = '⏸';
+    playBtn.classList.add('playing');
   });
+});
 
-  // Управление
-  playBtn.addEventListener('click', async () => {
-    if (audio.paused) {
-      await audio.play();
-      playBtn.textContent = '⏸';
-      playBtn.classList.add('playing');
-    } else {
-      audio.pause();
-      playBtn.textContent = '▶';
-      playBtn.classList.remove('playing');
-    }
-  });
+// Управление
+playBtn.addEventListener('click', async () => {
+  if (audio.paused) {
+    await audio.play();
+    playBtn.textContent = '⏸';
+    playBtn.classList.add('playing');
+  } else {
+    audio.pause();
+    playBtn.textContent = '▶';
+    playBtn.classList.remove('playing');
+  }
+});
 
-  muteBtn.addEventListener('click', () => {
-    audio.muted = !audio.muted;
-    muteBtn.textContent = audio.muted ? '🔈' : '🔊';
-  });
+muteBtn.addEventListener('click', () => {
+  audio.muted = !audio.muted;
+  muteBtn.textContent = audio.muted ? '🔈' : '🔊';
+});
 
-  audio.addEventListener('timeupdate', () => {
-    const p = (audio.currentTime / audio.duration) * 100 || 0;
-    seek.value = p;
-    cur.textContent = fmt(audio.currentTime);
-  });
+audio.addEventListener('timeupdate', () => {
+  const p = (audio.currentTime / audio.duration) * 100 || 0;
+  seek.value = p;
+  cur.textContent = fmt(audio.currentTime);
+});
 
-  seek.addEventListener('input', () => {
-    if (!isNaN(audio.duration)) {
-      audio.currentTime = (seek.value / 100) * audio.duration;
-    }
-  });
+seek.addEventListener('input', () => {
+  if (!isNaN(audio.duration)) {
+    audio.currentTime = (seek.value / 100) * audio.duration;
+  }
+});
 
-  audio.addEventListener('loadedmetadata', () => {
-    dur.textContent = fmt(audio.duration);
-  });
+audio.addEventListener('loadedmetadata', () => {
+  dur.textContent = fmt(audio.duration);
+});
 
-  // Автопереход к следующей песне
-  audio.addEventListener('ended', () => {
-    currentIndex++;
-    if (currentIndex < songs.length) {
-      const next = songs[currentIndex];
-      next.click(); // запуск следующей
-    } else {
-      playBtn.textContent = '▶';
-      playBtn.classList.remove('playing');
-    }
-  });
+// ✅ Автопереход на следующего исполнителя
+audio.addEventListener('ended', () => {
+  currentIndex++;
+  if (currentIndex < songs.length) {
+    songs[currentIndex].click(); // следующая песня CUPSIZE
+  } else {
+    // последняя песня CUPSIZE — переходим к Molly
+    window.location.href = "molly.html?autoplay=1";
+  }
+});
 </script>
 </body>
 </html>

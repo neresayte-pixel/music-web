@@ -44,6 +44,41 @@
     transform: scale(1.05);
   }
 
+  .btrs{
+    position: absolute;
+    top: 30px;   
+    right: 40px; 
+    font-size: 28px;
+  }
+
+  .btrs a{
+    text-decoration: none;
+    color: white;
+  }
+
+  /* 🔘 Фото под плейлистом */
+  .bottom-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    margin-bottom: 100px;
+  }
+
+  .bottom-photo img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+  }
+
+  .bottom-photo img:hover {
+    transform: scale(1.05);
+  }
+
+  /* ПЛЕЕР */
   .mini-player {
     position: fixed;
     bottom: 12px;
@@ -67,39 +102,32 @@
     z-index: 9999;
   }
 
-  .btrs{
-  position: absolute;
-  top: 30px;   
-  right: 40px; 
-  font-size: 28px;
-  }
-
-  .btrs a{
-      text-decoration: none;
-  color: white;
-  }
-
   .mini-player.visible {
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0);
   }
+
   .mp-cover {
     width: 56px; height: 56px; border-radius: 10px; object-fit: cover;
   }
+
   .mp-center { min-width: 0; }
   .mp-title { font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .mp-artist { font-size: 12px; color: #b5b5b5; margin-top: 2px; }
+
   .mp-seek {
     -webkit-appearance: none;
-     appearance: none;          
+    appearance: none;          
     width: 100%; height: 4px; background: #3a3a3a; border-radius: 999px; margin: 8px 0 4px;
   }
+
   .mp-seek::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 14px; height: 14px; border-radius: 50%;
     background: #e63946;
   }
+
   .mp-time { display: flex; justify-content: space-between; font-size: 11px; color: #b5b5b5; }
   .mp-controls { display: flex; gap: 8px; align-items: center; }
   .mp-btn {
@@ -134,8 +162,6 @@
   <button class="song-btn" data-src="./audio/Пошлая Молли - Дом Периньон (feat. Элджей).mp3">Пошлая Молли — Дом Периньон (feat. Элджей)</button>
   <button class="song-btn" data-src="./audio/Пошлая Молли - Буду песиком.mp3">Пошлая Молли — Буду песиком</button>
   <button class="song-btn" data-src="./audio/Пошлая Молли - Контракт.mp3">Пошлая Молли — Контракт</button>
-
-  <!-- ✅ Новые добавленные треки -->
   <button class="song-btn" data-src="./audio/Пошлая Молли feat. Молодой Платон - Школьник.mp3">Пошлая Молли feat. Молодой Платон — Школьник</button>
   <button class="song-btn" data-src="./audio/Пошлая Молли - Ханнамонтана.mp3">Пошлая Молли — Ханнамонтана</button>
   <button class="song-btn" data-src="./audio/Пошлая Молли - Нон стоп.mp3">Пошлая Молли — Нон стоп</button>
@@ -143,8 +169,15 @@
   <button class="song-btn" data-src="./audio/Пошлая Молли - Райские цветы.mp3">Пошлая Молли — Райские цветы</button>
 </div>
 
+<!-- 🔘 Округлённая фотография -->
+<div class="bottom-photo">
+  <img src="./photo/1200_6549cd6782682c29145b705f.jpg" alt="Пошлая Молли">
+  <!-- ↑ Укажи путь к своей фотографии здесь -->
+</div>
+
+<!-- Плеер -->
 <div class="mini-player" id="player">
-  <img class="mp-cover" src="./photo/images.jpg" alt="cover">
+  <img class="mp-cover" src="./photo/molly.jpg" alt="cover">
   <div class="mp-center">
     <div class="mp-title">—</div>
     <div class="mp-artist">Пошлая Молли</div>
@@ -158,9 +191,12 @@
   <audio id="mp-audio" preload="metadata"></audio>
 </div>
 
+<!-- 🔗 Кнопка перехода к следующему исполнителю -->
 <div class="btrs">
-<a href="kishlak.html">СЛЕДУЮЩИЙ</a>
+  <a href="kishlak.html">СЛЕДУЮЩИЙ</a>
+  <!-- ↑ Здесь укажи путь к следующей странице исполнителя -->
 </div>
+
 <script>
   const songs = Array.from(document.querySelectorAll('.song-btn'));
   const player = document.getElementById('player');
@@ -228,15 +264,16 @@
     dur.textContent = fmt(audio.duration);
   });
 
-  audio.addEventListener('ended', () => {
-    currentIndex++;
-    if (currentIndex < songs.length) {
-      songs[currentIndex].click();
-    } else {
-      playBtn.textContent = '▶';
-      playBtn.classList.remove('playing');
-    }
-  });
+audio.addEventListener('ended', () => {
+  currentIndex++;
+  if (currentIndex < songs.length) {
+    songs[currentIndex].click();
+  } else {
+    // ✅ после последней песни переходит на следующую страницу
+    window.location.href = "kishlak.html";
+  }
+});
+
 </script>
 </body>
 </html>
