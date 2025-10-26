@@ -45,15 +45,37 @@
   }
 
   .btrs{
-  position: absolute;
-  top: 30px;   
-  right: 40px; 
-  font-size: 28px;
+    position: absolute;
+    top: 30px;   
+    right: 40px; 
+    font-size: 28px;
   }
 
   .btrs a{
-      text-decoration: none;
-  color: white;
+    text-decoration: none;
+    color: white;
+  }
+
+  /* Фото под плейлистом */
+  .bottom-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    margin-bottom: 100px; /* чтобы не перекрывало плеер */
+  }
+
+  .bottom-photo img {
+    width: 250px;          /* размер */
+    height: 250px;
+    border-radius: 50%;    /* делает фото круглым */
+    object-fit: cover;     /* чтобы не искажалось */
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+  }
+
+  .bottom-photo img:hover {
+    transform: scale(1.05);
   }
 
   /* ПЛЕЕР */
@@ -92,7 +114,7 @@
   .mp-artist { font-size: 12px; color: #b5b5b5; margin-top: 2px; }
   .mp-seek {
     -webkit-appearance: none;
-     appearance: none;          
+    appearance: none;          
     width: 100%; height: 4px; background: #3a3a3a; border-radius: 999px; margin: 8px 0 4px;
   }
   .mp-seek::-webkit-slider-thumb {
@@ -134,6 +156,13 @@
   <button class="song-btn" data-src="./audio/CUPSIZE - Ты любишь травку.mp3" data-title="CUPSIZE — Ты любишь травку" data-artist="Cupsize">CUPSIZE — Ты любишь травку</button>
   <button class="song-btn" data-src="./audio/CUPSIZE - Я схожу с ума.mp3" data-title="CUPSIZE — Я схожу с ума" data-artist="Cupsize">CUPSIZE — Я схожу с ума</button>
 </div>
+
+<!-- ✅ ВОТ СЮДА ВСТАВЬ СВОЙ ПУТЬ К ФОТО -->
+<div class="bottom-photo">
+  <img src="./photo/cupsize.jpg" alt="CUPSIZE photo">
+  <!-- ↑ Укажи путь к своей фотографии здесь -->
+</div>
+<!-- ✅ КОНЕЦ ФОТО -->
 
 <!-- Плеер -->
 <div class="mini-player" id="player">
