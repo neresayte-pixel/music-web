@@ -6,8 +6,6 @@
 <title>Spotify Like – CUPSIZE</title>
 
 <link rel="icon" type="image/png" href="./photo/icon.png">
-
-<!-- FontAwesome (иконки) -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 
 <style>
@@ -32,17 +30,15 @@
     line-height:1.35;
   }
 
-  /* ====== GRID: sidebar | main | right ====== */
   .app{
     display:grid;
     grid-template-columns: 280px 1fr 360px;
-    grid-template-rows: 1fr auto; /* last row = bottom player */
+    grid-template-rows: 1fr auto;
     min-height: 100vh;
     gap: 8px;
     padding: 8px;
   }
 
-  /* ====== SIDEBAR ====== */
   .sidebar{
     background: var(--panel);
     border-radius: 12px;
@@ -56,9 +52,7 @@
     font-weight:800; letter-spacing: .3px; margin-bottom:12px;
   }
   .logo i{ color:var(--brand); font-size:22px; }
-  .nav{
-    display:flex; flex-direction:column; gap:6px; margin-bottom:16px;
-  }
+  .nav{ display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
   .nav-btn{
     display:flex; align-items:center; gap:12px;
     padding:10px 12px; border-radius:8px; color:var(--text);
@@ -69,22 +63,16 @@
     color:var(--subtext); font-size:12px; text-transform:uppercase;
     letter-spacing:.08em; margin:14px 0 8px;
   }
-  .list{
-    overflow:auto; min-height:0; padding-right:4px;
-  }
+  .list{ overflow:auto; min-height:0; padding-right:4px; }
   .list-item{
     display:flex; align-items:center; gap:10px;
     padding:8px 10px; border-radius:8px; cursor:pointer;
   }
   .list-item:hover{ background:var(--hover); }
-  .avatar{
-    width:34px; height:34px; border-radius:4px; object-fit:cover;
-    background:#222;
-  }
+  .avatar{ width:34px; height:34px; border-radius:4px; object-fit:cover; background:#222; }
   .li-title{ font-size:14px; }
   .li-sub{ font-size:12px; color:var(--subtext); }
 
-  /* ====== MAIN ====== */
   .main{
     background: linear-gradient(180deg, rgba(40,40,40,.55), rgba(24,24,24,.9)), url('./photo/cupsize.jpg') center/cover no-repeat fixed;
     border-radius: 12px;
@@ -111,57 +99,35 @@
     font-size:14px;
   }
 
-  .main-scroll{
-    overflow:auto; padding: 4px 14px 120px;  /* bottom padding so player не перекрывает */
-  }
+  .main-scroll{ overflow:auto; padding: 4px 14px 120px; }
+  .page-title{ font-size: clamp(22px, 3vw, 36px); font-weight: 800; margin: 12px 6px 12px; }
 
-  .page-title{
-    font-size: clamp(22px, 3vw, 36px);
-    font-weight: 800; margin: 12px 6px 12px;
-  }
-
-  /* ====== TRACK TABLE ====== */
-  .tracks{
-    width:100%; border-collapse: collapse;
-  }
+  .tracks{ width:100%; border-collapse: collapse; }
   .tracks thead th{
     text-align:left; font-size:12px; color:var(--subtext); font-weight:600;
     padding:8px 10px; border-bottom:1px solid var(--border);
   }
-  .tracks tbody tr{
-    transition: background .15s ease;
-  }
+  .tracks tbody tr{ transition: background .15s ease; }
   .tracks tbody tr:hover{ background: #ffffff08; }
-  .track{
-    padding:10px; vertical-align: middle;
-  }
-  .t-cell-title{
-    display:flex; align-items:center; gap:12px; min-width: 0;
-  }
-  .cover{
-    width:44px; height:44px; border-radius:6px; object-fit:cover; flex:0 0 auto;
-  }
+  .track{ padding:10px; vertical-align: middle; }
+  .t-cell-title{ display:flex; align-items:center; gap:12px; min-width: 0; }
+  .cover{ width:44px; height:44px; border-radius:6px; object-fit:cover; flex:0 0 auto; }
   .t-title{ font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .t-artist{ color:var(--subtext); font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .play-btn{
     width:36px; height:36px; border-radius:50%; border:none;
     background: var(--brand); color:#000; display:grid; place-items:center; cursor:pointer;
   }
-  .index{
-    width:26px; text-align:right; color:var(--subtext);
-  }
+  .index{ width:26px; text-align:right; color:var(--subtext); }
 
-  /* ====== RIGHT (Now Playing) ====== */
   .right{
     background: var(--panel);
     border-radius: 12px;
     padding: 14px;
     display:flex; flex-direction:column; gap:12px;
-    min-height:0; position:relative;
+    min-height:0;
   }
-  .np-cover{
-    width:100%; aspect-ratio:1/1; border-radius:12px; object-fit:cover; background:#222;
-  }
+  .np-cover{ width:100%; aspect-ratio:1/1; border-radius:12px; object-fit:cover; background:#222; }
   .np-title{ font-size:18px; font-weight:800; margin-top:4px; }
   .np-artist{ color:var(--subtext); margin-bottom:8px; }
   .chip{
@@ -176,7 +142,6 @@
   .video-card img{ width:100%; height:110px; object-fit:cover; display:block; }
   .video-card .vcap{ padding:8px; font-size:12px; color:var(--subtext); }
 
-  /* ====== BOTTOM PLAYER ====== */
   .player{
     grid-column: 1 / -1;
     background: var(--panel-2);
@@ -199,11 +164,8 @@
     width:34px; height:34px; border-radius:50%; display:grid; place-items:center;
     color:#fff; background:#262626; border:none; cursor:pointer;
   }
-  .ctl.primary{ background: var(--brand); color:#000; width:40px; height:40px; }
-  .seek{
-    display:flex; align-items:center; gap:10px; width: 80%;
-    font-size:12px; color:var(--subtext);
-  }
+  .ctl.primary{ background: var(--brand); color:#000; width:42px; height:42px; }
+  .seek{ display:flex; align-items:center; gap:10px; width: 80%; font-size:12px; color:var(--subtext); }
   input[type="range"]{
     -webkit-appearance:none; appearance:none; width:100%; height:4px; border-radius:999px; background:#3a3a3a;
   }
@@ -214,460 +176,65 @@
   .p-right{ display:flex; align-items:center; gap:10px; justify-content:flex-end; }
   .vol{ width:120px; }
 
-  /* ====== RESPONSIVE ====== */
-  @media (max-width: 1200px){
-    .app{ grid-template-columns: 260px 1fr 320px; }
-  }
+  /* ===== RESPONSIVE ===== */
   @media (max-width: 980px){
     .app{ grid-template-columns: 250px 1fr; }
     .right{ display:none; }
   }
+
+  /* ===== MOBILE IMPROVEMENTS ===== */
   @media (max-width: 720px){
     .app{
       grid-template-columns: 1fr;
       grid-template-rows: 1fr auto;
+      padding: 0;
     }
     .sidebar{ display:none; }
-    .player{ grid-template-columns: 1fr; gap:8px; }
-    .p-center .seek{ width:100%; }
+    .main-header{ padding:12px; }
+    .page-title{ font-size:22px; }
+    .track{ padding:14px 10px; }
+    .cover{ width:54px; height:54px; }
+    .t-title{ font-size:15px; }
+    .t-artist{ font-size:13px; }
+
+    .player{
+      grid-template-columns: 1fr;
+      gap:14px;
+      padding:16px 12px;
+    }
+    .p-cover{ width:68px; height:68px; }
+    .p-title{ font-size:16px; }
+    .p-artist{ font-size:14px; }
+    .ctl{ width:46px; height:46px; font-size:18px; }
+    .ctl.primary{ width:60px; height:60px; font-size:22px; }
+    .seek{ gap:14px; font-size:14px; width:90%; }
+    input[type="range"]{ height:6px; }
+    input[type="range"]::-webkit-slider-thumb{ width:16px; height:16px; }
+
     .p-right{ justify-content:center; }
+    .vol{ width:150px; }
   }
 
-  /* helper */
-  .muted{ opacity:.6; }
+  @media (max-width: 480px){
+    .page-title{ font-size:20px; text-align:center; }
+    .player{ padding:18px 8px; }
+    .controls{ gap:18px; }
+    .ctl{ width:52px; height:52px; font-size:20px; }
+    .ctl.primary{ width:70px; height:70px; font-size:26px; }
+    .p-cover{ width:80px; height:80px; }
+    .p-title{ font-size:18px; }
+    .p-artist{ font-size:15px; }
+    .seek{ gap:16px; font-size:15px; }
+    input[type="range"]{ height:8px; }
+    input[type="range"]::-webkit-slider-thumb{ width:18px; height:18px; }
+  }
 </style>
 </head>
 <body>
 
-<div class="app">
+<!-- ТВОЙ ОСТАВШИЙСЯ HTML И JS ИЗ ПРОШЛОЙ ВЕРСИИ БЕЗ ИЗМЕНЕНИЙ -->
 
-  <!-- ===== SIDEBAR ===== -->
-  <aside class="sidebar">
-    <div class="logo"><i class="fa-brands fa-spotify"></i> <span>My Spotify</span></div>
-
-    <nav class="nav">
-      <a class="nav-btn" href="#"><i class="fa-solid fa-house"></i> Главная</a>
-      <a class="nav-btn" href="#"><i class="fa-solid fa-magnifying-glass"></i> Поиск</a>
-      <a class="nav-btn" href="#"><i class="fa-solid fa-book"></i> Моя медиатека</a>
-    </nav>
-
-    <div class="section-title">Исполнители</div>
-    <div class="list" id="artistsList">
-      <!-- примеры (можешь заменить/дополнить) -->
-      <div class="list-item">
-        <img class="avatar" src="./photo/cupsize.jpg" alt="">
-        <div>
-          <div class="li-title">CUPSIZE</div>
-          <div class="li-sub">Исполнитель</div>
-        </div>
-      </div>
-      <div class="list-item">
-        <img class="avatar" src="./photo/cupsize.jpg" alt="">
-        <div>
-          <div class="li-title">Пошлая Молли</div>
-          <div class="li-sub">Исполнитель</div>
-        </div>
-      </div>
-      <div class="list-item">
-        <img class="avatar" src="./photo/cupsize.jpg" alt="">
-        <div>
-          <div class="li-title">Crystal Castles</div>
-          <div class="li-sub">Исполнитель</div>
-        </div>
-      </div>
-    </div>
-  </aside>
-
-  <!-- ===== MAIN ===== -->
-  <main class="main">
-    <header class="main-header">
-      <div class="breadcrumbs">
-        <button class="circle-btn" onclick="history.back()" aria-label="Назад"><i class="fa-solid fa-chevron-left"></i></button>
-        <button class="circle-btn" onclick="history.forward()" aria-label="Вперёд"><i class="fa-solid fa-chevron-right"></i></button>
-      </div>
-
-      <label class="searchbox" title="Поиск по трекам на этой странице">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input id="search" placeholder="Поиск по плейлисту" />
-      </label>
-    </header>
-
-    <div class="main-scroll">
-      <div class="page-title">CUPSIZE — Плейлист</div>
-
-      <table class="tracks" id="tracksTable">
-        <thead>
-          <tr>
-            <th class="index">#</th>
-            <th>Название</th>
-            <th>Длительность</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-
-          <!-- Каждая строка = один трек -->
-          <!-- Если есть индивидуальная обложка — добавь data-cover -->
-          <tr class="row" data-src="./audio/CUPSIZE - мне похуй.mp3" data-title="мне похуй" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
-            <td class="index">1</td>
-            <td class="track">
-              <div class="t-cell-title">
-                <img class="cover" src="./photo/cupsize.jpg" alt="">
-                <div style="min-width:0">
-                  <div class="t-title">CUPSIZE — мне похуй</div>
-                  <div class="t-artist">CUPSIZE</div>
-                </div>
-              </div>
-            </td>
-            <td class="track"><span class="dur" data-dur>–:–</span></td>
-            <td class="track" style="width:58px">
-              <button class="play-btn" aria-label="Играть"><i class="fa-solid fa-play"></i></button>
-            </td>
-          </tr>
-
-          <tr class="row" data-src="./audio/CUPSIZE - вайфуу.mp3" data-title="вайфуу" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
-            <td class="index">2</td>
-            <td class="track">
-              <div class="t-cell-title">
-                <img class="cover" src="./photo/cupsize.jpg" alt="">
-                <div style="min-width:0">
-                  <div class="t-title">CUPSIZE — вайфуу</div>
-                  <div class="t-artist">CUPSIZE</div>
-                </div>
-              </div>
-            </td>
-            <td class="track"><span class="dur" data-dur>–:–</span></td>
-            <td class="track"><button class="play-btn" aria-label="Играть"><i class="fa-solid fa-play"></i></button></td>
-          </tr>
-
-          <tr class="row" data-src="./audio/CUPSIZE - Вирус.mp3" data-title="Вирус" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
-            <td class="index">3</td>
-            <td class="track">
-              <div class="t-cell-title">
-                <img class="cover" src="./photo/cupsize.jpg" alt="">
-                <div style="min-width:0">
-                  <div class="t-title">CUPSIZE — Вирус</div>
-                  <div class="t-artist">CUPSIZE</div>
-                </div>
-              </div>
-            </td>
-            <td class="track"><span class="dur" data-dur>–:–</span></td>
-            <td class="track"><button class="play-btn" aria-label="Играть"><i class="fa-solid fa-play"></i></button></td>
-          </tr>
-
-          <tr class="row" data-src="./audio/CUPSIZE - Забуду.mp3" data-title="Забуду" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
-            <td class="index">4</td>
-            <td class="track">
-              <div class="t-cell-title">
-                <img class="cover" src="./photo/cupsize.jpg" alt="">
-                <div style="min-width:0">
-                  <div class="t-title">CUPSIZE — Забуду</div>
-                  <div class="t-artist">CUPSIZE</div>
-                </div>
-              </div>
-            </td>
-            <td class="track"><span class="dur" data-dur>–:–</span></td>
-            <td class="track"><button class="play-btn" aria-label="Играть"><i class="fa-solid fa-play"></i></button></td>
-          </tr>
-
-          <tr class="row" data-src="./audio/CUPSIZE - лиза, настя.mp3" data-title="лиза, настя" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
-            <td class="index">5</td>
-            <td class="track">
-              <div class="t-cell-title">
-                <img class="cover" src="./photo/cupsize.jpg" alt="">
-                <div style="min-width:0">
-                  <div class="t-title">CUPSIZE — лиза, настя</div>
-                  <div class="t-artist">CUPSIZE</div>
-                </div>
-              </div>
-            </td>
-            <td class="track"><span class="dur" data-dur>–:–</span></td>
-            <td class="track"><button class="play-btn" aria-label="Играть"><i class="fa-solid fa-play"></i></button></td>
-          </tr>
-
-          <tr class="row" data-src="./audio/CUPSIZE - люби меня, алина.mp3" data-title="люби меня, алина" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
-            <td class="index">6</td>
-            <td class="track">
-              <div class="t-cell-title">
-                <img class="cover" src="./photo/cupsize.jpg" alt="">
-                <div style="min-width:0">
-                  <div class="t-title">CUPSIZE — люби меня, алина</div>
-                  <div class="t-artist">CUPSIZE</div>
-                </div>
-              </div>
-            </td>
-            <td class="track"><span class="dur" data-dur>–:–</span></td>
-            <td class="track"><button class="play-btn" aria-label="Играть"><i class="fa-solid fa-play"></i></button></td>
-          </tr>
-
-          <tr class="row" data-src="./audio/CUPSIZE - Ты любишь танцевать.mp3" data-title="Ты любишь танцевать" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
-            <td class="index">7</td>
-            <td class="track">
-              <div class="t-cell-title">
-                <img class="cover" src="./photo/cupsize.jpg" alt="">
-                <div style="min-width:0">
-                  <div class="t-title">CUPSIZE — Ты любишь танцевать</div>
-                  <div class="t-artist">CUPSIZE</div>
-                </div>
-              </div>
-            </td>
-            <td class="track"><span class="dur" data-dur>–:–</span></td>
-            <td class="track"><button class="play-btn" aria-label="Играть"><i class="fa-solid fa-play"></i></button></td>
-          </tr>
-
-          <tr class="row" data-src="./audio/CUPSIZE - Ты любишь травку.mp3" data-title="Ты любишь травку" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
-            <td class="index">8</td>
-            <td class="track">
-              <div class="t-cell-title">
-                <img class="cover" src="./photo/cupsize.jpg" alt="">
-                <div style="min-width:0">
-                  <div class="t-title">CUPSIZE — Ты любишь травку</div>
-                  <div class="t-artist">CUPSIZE</div>
-                </div>
-              </div>
-            </td>
-            <td class="track"><span class="dur" data-dur>–:–</span></td>
-            <td class="track"><button class="play-btn" aria-label="Играть"><i class="fa-solid fa-play"></i></button></td>
-          </tr>
-
-          <tr class="row" data-src="./audio/CUPSIZE - Я схожу с ума.mp3" data-title="Я схожу с ума" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
-            <td class="index">9</td>
-            <td class="track">
-              <div class="t-cell-title">
-                <img class="cover" src="./photo/cupsize.jpg" alt="">
-                <div style="min-width:0">
-                  <div class="t-title">CUPSIZE — Я схожу с ума</div>
-                  <div class="t-artist">CUPSIZE</div>
-                </div>
-              </div>
-            </td>
-            <td class="track"><span class="dur" data-dur>–:–</span></td>
-            <td class="track"><button class="play-btn" aria-label="Играть"><i class="fa-solid fa-play"></i></button></td>
-          </tr>
-
-        </tbody>
-      </table>
-    </div>
-  </main>
-
-  <!-- ===== RIGHT: NOW PLAYING ===== -->
-  <aside class="right">
-    <img class="np-cover" id="npCover" src="./photo/cupsize.jpg" alt="cover">
-    <div class="np-title" id="npTitle">Выберите трек</div>
-    <div class="np-artist" id="npArtist">—</div>
-    <span class="chip"><i class="fa-regular fa-heart"></i> В любимые</span>
-
-    <div class="divider"></div>
-    <div style="font-weight:700">Другие музыкальные клипы</div>
-    <div class="video-row">
-      <div class="video-card">
-        <img src="./photo/cupsize.jpg" alt="">
-        <div class="vcap">ЛОЛ — Пошлая Молли</div>
-      </div>
-      <div class="video-card">
-        <img src="./photo/cupsize.jpg" alt="">
-        <div class="vcap">Дом Периньон — Пошлая Молли</div>
-      </div>
-    </div>
-  </aside>
-
-  <!-- ===== BOTTOM PLAYER ===== -->
-  <footer class="player" id="player">
-    <div class="p-left">
-      <img class="p-cover" id="pCover" src="./photo/cupsize.jpg" alt="">
-      <div style="min-width:0">
-        <div class="p-title" id="pTitle">Ничего не играет</div>
-        <div class="p-artist" id="pArtist">—</div>
-      </div>
-    </div>
-
-    <div class="p-center">
-      <div class="controls">
-        <button class="ctl" id="prevBtn" aria-label="Предыдущий"><i class="fa-solid fa-backward-step"></i></button>
-        <button class="ctl primary" id="playBtn" aria-label="Играть/Пауза"><i class="fa-solid fa-play"></i></button>
-        <button class="ctl" id="nextBtn" aria-label="Следующий"><i class="fa-solid fa-forward-step"></i></button>
-        <button class="ctl" id="muteBtn" aria-label="Звук"><i class="fa-solid fa-volume-high"></i></button>
-      </div>
-      <div class="seek">
-        <span id="curTime">0:00</span>
-        <input type="range" id="seek" min="0" max="100" value="0" step="0.1">
-        <span id="durTime">0:00</span>
-      </div>
-    </div>
-
-    <div class="p-right">
-      <i class="fa-regular fa-window-restore muted"></i>
-      <input type="range" id="vol" class="vol" min="0" max="1" step="0.01" value="1" title="Громкость" />
-    </div>
-
-    <audio id="audio" preload="metadata"></audio>
-  </footer>
-
-</div>
-
-<script>
-  // ======== helpers ========
-  const fmt = s => {
-    if (!isFinite(s)) return '0:00';
-    const m = Math.floor(s / 60);
-    const ss = Math.floor(s % 60).toString().padStart(2,'0');
-    return `${m}:${ss}`;
-  };
-
-  // ======== elements ========
-  const rows = [...document.querySelectorAll('.row')];
-  const audio = document.getElementById('audio');
-  const playBtn = document.getElementById('playBtn');
-  const muteBtn = document.getElementById('muteBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const prevBtn = document.getElementById('prevBtn');
-  const seek = document.getElementById('seek');
-  const cur = document.getElementById('curTime');
-  const dur = document.getElementById('durTime');
-  const vol = document.getElementById('vol');
-
-  const pTitle = document.getElementById('pTitle');
-  const pArtist = document.getElementById('pArtist');
-  const pCover = document.getElementById('pCover');
-
-  const npTitle = document.getElementById('npTitle');
-  const npArtist = document.getElementById('npArtist');
-  const npCover = document.getElementById('npCover');
-
-  const search = document.getElementById('search');
-
-  let currentIndex = -1;
-
-  // предзагрузка длительностей в таблицу
-  rows.forEach((tr) => {
-    const url = tr.dataset.src;
-    const a = new Audio();
-    a.src = url;
-    a.addEventListener('loadedmetadata', () => {
-      const span = tr.querySelector('[data-dur]');
-      if (span) span.textContent = fmt(a.duration);
-    }, { once: true });
-  });
-
-  // запуск трека
-  function playIndex(i){
-    if (i < 0 || i >= rows.length) return;
-    currentIndex = i;
-    const tr = rows[i];
-    const { src, title, artist, cover } = tr.dataset;
-
-    audio.src = src;
-    audio.play();
-
-    // обновить UI
-    pTitle.textContent = `${artist} — ${title}`;
-    pArtist.textContent = artist;
-    pCover.src = cover || './photo/cupsize.jpg';
-
-    npTitle.textContent = `${artist} — ${title}`;
-    npArtist.textContent = artist;
-    npCover.src = cover || './photo/cupsize.jpg';
-
-    // состояние кнопки
-    playBtn.firstElementChild.className = 'fa-solid fa-pause';
-
-    // выделить активную строку
-    rows.forEach(r => r.classList.remove('active'));
-    tr.classList.add('active');
-  }
-
-  // обработчики на кнопках в строках
-  rows.forEach((tr, i) => {
-    const btn = tr.querySelector('.play-btn');
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (currentIndex === i && !audio.paused){
-        audio.pause();
-        playBtn.firstElementChild.className = 'fa-solid fa-play';
-      } else {
-        playIndex(i);
-      }
-    });
-    tr.addEventListener('dblclick', () => playIndex(i));
-  });
-
-  // нижний плеер
-  playBtn.addEventListener('click', async () => {
-    if (audio.src === '' && rows.length) {
-      playIndex(0);
-      return;
-    }
-    if (audio.paused){
-      await audio.play();
-      playBtn.firstElementChild.className = 'fa-solid fa-pause';
-    } else {
-      audio.pause();
-      playBtn.firstElementChild.className = 'fa-solid fa-play';
-    }
-  });
-
-  nextBtn.addEventListener('click', () => {
-    if (currentIndex < rows.length - 1){
-      playIndex(currentIndex + 1);
-    } else {
-      // как у тебя: после последнего — переход к Molly
-      window.location.href = "molly.html?autoplay=1";
-    }
-  });
-
-  prevBtn.addEventListener('click', () => {
-    if (currentIndex > 0) playIndex(currentIndex - 1);
-    else { audio.currentTime = 0; }
-  });
-
-  muteBtn.addEventListener('click', () => {
-    audio.muted = !audio.muted;
-    muteBtn.firstElementChild.className = audio.muted ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-volume-high';
-  });
-
-  vol.addEventListener('input', () => {
-    audio.volume = +vol.value;
-    audio.muted = audio.volume === 0;
-    muteBtn.firstElementChild.className = audio.muted ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-volume-high';
-  });
-
-  audio.addEventListener('timeupdate', () => {
-    seek.value = (audio.currentTime / (audio.duration || 1)) * 100;
-    cur.textContent = fmt(audio.currentTime);
-    dur.textContent = fmt(audio.duration);
-  });
-
-  seek.addEventListener('input', () => {
-    if (isFinite(audio.duration)){
-      audio.currentTime = (seek.value / 100) * audio.duration;
-    }
-  });
-
-  audio.addEventListener('ended', () => {
-    if (currentIndex < rows.length - 1){
-      playIndex(currentIndex + 1);
-    } else {
-      window.location.href = "molly.html?autoplay=1";
-    }
-  });
-
-  // Поиск по таблице
-  search.addEventListener('input', () => {
-    const q = search.value.trim().toLowerCase();
-    rows.forEach(tr => {
-      const text = (tr.dataset.title + ' ' + tr.dataset.artist).toLowerCase();
-      tr.style.display = text.includes(q) ? '' : 'none';
-    });
-  });
-
-  // Автовоспроизведение, если пришли с параметром ?autoplay=1
-  (function checkAutoplay(){
-    const u = new URL(location.href);
-    if (u.searchParams.get('autoplay') === '1') {
-      playIndex(0);
-    }
-  })();
-</script>
+<!-- (сюда просто вставь из предыдущего ответа весь остальной HTML и JS-код) -->
 
 </body>
 </html>
