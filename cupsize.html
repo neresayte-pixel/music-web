@@ -3,238 +3,501 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Spotify Like – CUPSIZE</title>
+<title>CUPSIZE — Плейлист</title>
 
 <link rel="icon" type="image/png" href="./photo/icon.png">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 
 <style>
   :root{
-    --bg: #121212;
-    --panel: #181818;
-    --panel-2:#0f0f0f;
-    --text: #fff;
-    --subtext:#b3b3b3;
-    --brand:#1DB954;
-    --hover:#2a2a2a;
-    --border:#2b2b2b;
+    --bg: #0b0b0f;
+    --card: rgba(24,24,32,.72);
+    --outline: rgba(255,255,255,.06);
+    --txt: #f4f6ff;
+    --muted:#a9afc7;
+    --brand:#2bf08e;  /* неоново-зелёный */
+    --brand-2:#00c2ff;
+    --hover: rgba(255,255,255,.06);
   }
-
   *{ box-sizing: border-box; }
-
+  html,body{ height:100%; }
   body{
     margin:0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-    line-height:1.35;
+    color:var(--txt);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: radial-gradient(1200px 1200px at 80% 10%, rgba(0, 194, 255,.20), transparent 50%),
+                radial-gradient(900px 900px at 20% 80%, rgba(43, 240, 142,.18), transparent 50%),
+                var(--bg) url('./photo/cupsize.jpg') center/cover fixed no-repeat;
   }
 
+  /* стеклянная подложка */
+  .glass{
+    background: var(--card);
+    border: 1px solid var(--outline);
+    border-radius: 16px;
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    box-shadow: 0 20px 50px rgba(0,0,0,.35);
+  }
+
+  /* ====== LAYOUT ====== */
   .app{
+    min-height:100vh;
     display:grid;
     grid-template-columns: 280px 1fr 360px;
     grid-template-rows: 1fr auto;
-    min-height: 100vh;
-    gap: 8px;
-    padding: 8px;
-  }
-
-  .sidebar{
-    background: var(--panel);
-    border-radius: 12px;
+    gap: 14px;
     padding: 14px;
-    display:flex;
-    flex-direction:column;
-    min-height:0;
-  }
-  .logo{
-    display:flex; align-items:center; gap:10px;
-    font-weight:800; letter-spacing: .3px; margin-bottom:12px;
-  }
-  .logo i{ color:var(--brand); font-size:22px; }
-  .nav{ display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
-  .nav-btn{
-    display:flex; align-items:center; gap:12px;
-    padding:10px 12px; border-radius:8px; color:var(--text);
-    text-decoration:none; font-weight:600;
-  }
-  .nav-btn:hover{ background:var(--hover); }
-  .section-title{
-    color:var(--subtext); font-size:12px; text-transform:uppercase;
-    letter-spacing:.08em; margin:14px 0 8px;
-  }
-  .list{ overflow:auto; min-height:0; padding-right:4px; }
-  .list-item{
-    display:flex; align-items:center; gap:10px;
-    padding:8px 10px; border-radius:8px; cursor:pointer;
-  }
-  .list-item:hover{ background:var(--hover); }
-  .avatar{ width:34px; height:34px; border-radius:4px; object-fit:cover; background:#222; }
-  .li-title{ font-size:14px; }
-  .li-sub{ font-size:12px; color:var(--subtext); }
-
-  .main{
-    background: linear-gradient(180deg, rgba(40,40,40,.55), rgba(24,24,24,.9)), url('./photo/cupsize.jpg') center/cover no-repeat fixed;
-    border-radius: 12px;
-    overflow:hidden;
-    display:flex; flex-direction:column;
-    min-height:0;
-  }
-  .main-header{
-    padding: 18px 18px 6px;
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .breadcrumbs{ display:flex; gap:6px; }
-  .circle-btn{
-    width:34px; height:34px; border-radius:50%; display:grid; place-items:center;
-    background:#00000066; border:1px solid #00000066;
-    color:#fff; cursor:pointer;
-  }
-  .searchbox{
-    display:flex; align-items:center; gap:8px; background:#ffffff0f; border:1px solid #ffffff12;
-    padding:8px 10px; border-radius:999px; min-width: 220px;
-  }
-  .searchbox input{
-    background:transparent; border:none; color:#fff; outline:none; width:100%;
-    font-size:14px;
   }
 
-  .main-scroll{ overflow:auto; padding: 4px 14px 120px; }
-  .page-title{ font-size: clamp(22px, 3vw, 36px); font-weight: 800; margin: 12px 6px 12px; }
+  /* ====== SIDEBAR ====== */
+  .sidebar{ padding:14px; display:flex; flex-direction:column; gap:12px; }
+  .brand{
+    display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px;
+  }
+  .brand i{ color:var(--brand); }
+  .nav{
+    display:flex; flex-direction:column; gap:6px; margin-top:8px;
+  }
+  .nav a{
+    text-decoration:none; color:var(--txt); padding:10px 12px; border-radius:10px;
+    display:flex; align-items:center; gap:12px; font-weight:600;
+  }
+  .nav a:hover{ background:var(--hover); }
+  .aside-title{
+    font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.12em;
+    margin:10px 6px 4px;
+  }
+  .artist{
+    display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:10px; cursor:pointer;
+  }
+  .artist:hover{ background:var(--hover); }
+  .avatar{ width:36px; height:36px; border-radius:8px; object-fit:cover; }
 
-  .tracks{ width:100%; border-collapse: collapse; }
-  .tracks thead th{
-    text-align:left; font-size:12px; color:var(--subtext); font-weight:600;
-    padding:8px 10px; border-bottom:1px solid var(--border);
+  /* ====== MAIN ====== */
+  .main{ display:flex; flex-direction:column; overflow:hidden; }
+  .header{
+    padding:16px; display:flex; align-items:center; justify-content:space-between;
   }
-  .tracks tbody tr{ transition: background .15s ease; }
-  .tracks tbody tr:hover{ background: #ffffff08; }
-  .track{ padding:10px; vertical-align: middle; }
-  .t-cell-title{ display:flex; align-items:center; gap:12px; min-width: 0; }
-  .cover{ width:44px; height:44px; border-radius:6px; object-fit:cover; flex:0 0 auto; }
-  .t-title{ font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .t-artist{ color:var(--subtext); font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .play-btn{
-    width:36px; height:36px; border-radius:50%; border:none;
-    background: var(--brand); color:#000; display:grid; place-items:center; cursor:pointer;
+  .controls-sm{ display:flex; gap:8px; }
+  .round{
+    width:36px; height:36px; border-radius:999px; border:1px solid var(--outline);
+    display:grid; place-items:center; background:rgba(0,0,0,.35); color:var(--txt); cursor:pointer;
   }
-  .index{ width:26px; text-align:right; color:var(--subtext); }
+  .search{
+    display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px;
+    border:1px solid var(--outline); background:rgba(0,0,0,.35); min-width:260px;
+  }
+  .search input{ border:none; background:transparent; color:var(--txt); outline:none; width:100%; font-size:14px; }
 
-  .right{
-    background: var(--panel);
-    border-radius: 12px;
-    padding: 14px;
-    display:flex; flex-direction:column; gap:12px;
-    min-height:0;
+  .scroll{ overflow:auto; padding: 4px 14px 140px; }
+  .title{
+    font-size: clamp(22px, 3.2vw, 40px); font-weight:900; letter-spacing:.3px; margin:6px 8px 14px;
   }
-  .np-cover{ width:100%; aspect-ratio:1/1; border-radius:12px; object-fit:cover; background:#222; }
-  .np-title{ font-size:18px; font-weight:800; margin-top:4px; }
-  .np-artist{ color:var(--subtext); margin-bottom:8px; }
-  .chip{
-    display:inline-flex; gap:6px; align-items:center;
-    padding:6px 10px; border-radius:999px; background:#ffffff12; color:#fff; font-size:12px;
-  }
-  .right .divider{ height:1px; background:var(--border); margin:12px 0; }
-  .video-row{ display:flex; gap:10px; }
-  .video-card{
-    flex:1 1 50%; background:#1a1a1a; border:1px solid #222; border-radius:10px; overflow:hidden;
-  }
-  .video-card img{ width:100%; height:110px; object-fit:cover; display:block; }
-  .video-card .vcap{ padding:8px; font-size:12px; color:var(--subtext); }
 
+  /* ====== TRACKS (flex-строки) ====== */
+  .row{
+    display:grid; grid-template-columns: 34px 1fr 84px;
+    align-items:center; gap:14px; padding:12px 12px; border-radius:12px;
+    transition: background .15s ease, transform .08s ease;
+  }
+  .row:hover{ background:var(--hover); }
+  .row:active{ transform: scale(.995); }
+  .row .idx{ text-align:right; color:var(--muted); font-variant-numeric: tabular-nums; }
+  .row .meta{ display:flex; align-items:center; gap:12px; min-width:0; }
+  .cover{ width:56px; height:56px; border-radius:12px; object-fit:cover; box-shadow:0 8px 20px rgba(0,0,0,.35); }
+  .t1{ font-weight:800; font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .t2{ color:var(--muted); font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .play{
+    width:40px; height:40px; border-radius:12px; border:none; cursor:pointer;
+    background: linear-gradient(135deg, var(--brand), var(--brand-2));
+    color:#04130f; display:grid; place-items:center; font-size:16px;
+    box-shadow: 0 8px 22px rgba(0,0,0,.35);
+  }
+  .dur{ color:var(--muted); font-variant-numeric: tabular-nums; }
+
+  /* ====== NOW PLAYING ====== */
+  .right{ padding:14px; display:flex; flex-direction:column; gap:14px; }
+  .np-cover{ width:100%; aspect-ratio:1/1; border-radius:16px; object-fit:cover; box-shadow: 0 20px 40px rgba(0,0,0,.45); }
+  .np-title{ font-weight:900; font-size:18px; }
+  .np-artist{ color:var(--muted); margin-top:-6px; }
+
+  /* ====== PLAYER ====== */
   .player{
     grid-column: 1 / -1;
-    background: var(--panel-2);
-    border-radius: 12px;
-    display:grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    align-items:center;
-    padding: 10px 14px;
-    gap: 12px;
-    position: sticky; bottom:8px;
+    display:grid; grid-template-columns: 1.1fr 2fr 1.1fr; align-items:center; gap:14px;
+    padding:12px 16px; border-radius:16px; border:1px solid var(--outline);
+    backdrop-filter: blur(10px) saturate(130%); -webkit-backdrop-filter: blur(10px) saturate(130%);
+    background: rgba(10,12,16,.72);
   }
-  .p-left{ display:flex; align-items:center; gap:10px; min-width:0; }
-  .p-cover{ width:56px; height:56px; border-radius:8px; object-fit:cover; background:#222; }
-  .p-title{ font-weight:700; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .p-artist{ font-size:12px; color:var(--subtext); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .p-left{ display:flex; align-items:center; gap:12px; min-width:0; }
+  .p-cover{ width:60px; height:60px; border-radius:12px; object-fit:cover; }
+  .p-title{ font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .p-artist{ color:var(--muted); font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-  .p-center{ display:flex; flex-direction:column; align-items:center; gap:6px; }
-  .controls{ display:flex; align-items:center; gap:12px; }
+  .p-center{ display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .p-controls{ display:flex; align-items:center; gap:14px; }
   .ctl{
-    width:34px; height:34px; border-radius:50%; display:grid; place-items:center;
-    color:#fff; background:#262626; border:none; cursor:pointer;
+    width:42px; height:42px; border-radius:12px; border:1px solid var(--outline);
+    background:rgba(255,255,255,.06); color:var(--txt); display:grid; place-items:center;
+    cursor:pointer;
   }
-  .ctl.primary{ background: var(--brand); color:#000; width:42px; height:42px; }
-  .seek{ display:flex; align-items:center; gap:10px; width: 80%; font-size:12px; color:var(--subtext); }
+  .ctl.primary{
+    width:58px; height:58px; font-size:18px; border:none;
+    background: linear-gradient(135deg, var(--brand), var(--brand-2));
+    color:#04130f; box-shadow: 0 10px 26px rgba(0,0,0,.35);
+  }
+  .seek{
+    width:92%; display:flex; align-items:center; gap:12px; font-size:12px; color:var(--muted);
+  }
   input[type="range"]{
-    -webkit-appearance:none; appearance:none; width:100%; height:4px; border-radius:999px; background:#3a3a3a;
+    -webkit-appearance:none; appearance:none; width:100%; height:6px; border-radius:999px;
+    background:linear-gradient(90deg, var(--brand), var(--brand-2));
+    outline:none;
   }
   input[type="range"]::-webkit-slider-thumb{
-    -webkit-appearance:none; width:14px; height:14px; border-radius:50%; background:var(--brand);
+    -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:#fff;
+    border: 4px solid #101622; box-shadow: 0 4px 10px rgba(0,0,0,.35);
   }
-
   .p-right{ display:flex; align-items:center; gap:10px; justify-content:flex-end; }
-  .vol{ width:120px; }
+  .vol{ width:160px; }
 
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 980px){
-    .app{ grid-template-columns: 250px 1fr; }
+  /* ====== RESPONSIVE ====== */
+  @media (max-width: 1080px){
+    .app{ grid-template-columns: 260px 1fr; }
     .right{ display:none; }
   }
-
-  /* ===== MOBILE IMPROVEMENTS ===== */
-  @media (max-width: 720px){
-    .app{
-      grid-template-columns: 1fr;
-      grid-template-rows: 1fr auto;
-      padding: 0;
-    }
+  @media (max-width: 760px){
+    .app{ grid-template-columns: 1fr; grid-template-rows: 1fr auto; padding:10px; gap:10px; }
     .sidebar{ display:none; }
-    .main-header{ padding:12px; }
-    .page-title{ font-size:22px; }
-    .track{ padding:14px 10px; }
-    .cover{ width:54px; height:54px; }
-    .t-title{ font-size:15px; }
-    .t-artist{ font-size:13px; }
-
+    .title{ text-align:center; }
+    .row{ grid-template-columns: 28px 1fr 74px; padding:14px 12px; }
+    .cover{ width:64px; height:64px; border-radius:14px; }
+    .t1{ font-size:17px; }
+    .t2{ font-size:14px; }
+    .play{ width:48px; height:48px; font-size:18px; border-radius:14px; }
     .player{
-      grid-template-columns: 1fr;
-      gap:14px;
-      padding:16px 12px;
+      grid-template-columns: 1fr; gap:16px; padding:18px 12px;
     }
-    .p-cover{ width:68px; height:68px; }
-    .p-title{ font-size:16px; }
-    .p-artist{ font-size:14px; }
-    .ctl{ width:46px; height:46px; font-size:18px; }
-    .ctl.primary{ width:60px; height:60px; font-size:22px; }
-    .seek{ gap:14px; font-size:14px; width:90%; }
-    input[type="range"]{ height:6px; }
-    input[type="range"]::-webkit-slider-thumb{ width:16px; height:16px; }
-
-    .p-right{ justify-content:center; }
-    .vol{ width:150px; }
+    .p-cover{ width:86px; height:86px; border-radius:14px; }
+    .p-controls .ctl{ width:60px; height:60px; font-size:20px; border-radius:14px; }
+    .p-controls .ctl.primary{ width:76px; height:76px; font-size:26px; }
+    .seek{ width:100%; font-size:14px; gap:16px; }
+    input[type="range"]{ height:10px; }
+    input[type="range"]::-webkit-slider-thumb{ width:22px; height:22px; }
+    .vol{ width:200px; }
   }
-
-  @media (max-width: 480px){
-    .page-title{ font-size:20px; text-align:center; }
-    .player{ padding:18px 8px; }
-    .controls{ gap:18px; }
-    .ctl{ width:52px; height:52px; font-size:20px; }
-    .ctl.primary{ width:70px; height:70px; font-size:26px; }
-    .p-cover{ width:80px; height:80px; }
+  @media (max-width: 460px){
+    .p-controls .ctl{ width:66px; height:66px; font-size:22px; }
+    .p-controls .ctl.primary{ width:86px; height:86px; font-size:30px; }
     .p-title{ font-size:18px; }
     .p-artist{ font-size:15px; }
-    .seek{ gap:16px; font-size:15px; }
-    input[type="range"]{ height:8px; }
-    input[type="range"]::-webkit-slider-thumb{ width:18px; height:18px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ТВОЙ ОСТАВШИЙСЯ HTML И JS ИЗ ПРОШЛОЙ ВЕРСИИ БЕЗ ИЗМЕНЕНИЙ -->
+<div class="app">
 
-<!-- (сюда просто вставь из предыдущего ответа весь остальной HTML и JS-код) -->
+  <!-- Sidebar -->
+  <aside class="glass sidebar">
+    <div class="brand"><i class="fa-solid fa-bolt"></i> <span>Atomic Player</span></div>
+    <nav class="nav">
+      <a href="#"><i class="fa-solid fa-fire"></i> Главная</a>
+      <a href="#"><i class="fa-solid fa-magnifying-glass"></i> Поиск</a>
+      <a href="#"><i class="fa-solid fa-rectangle-list"></i> Медиатека</a>
+    </nav>
+    <div class="aside-title">Исполнители</div>
+    <div class="artist"><img class="avatar" src="./photo/cupsize.jpg" alt=""><div><div>CUPSIZE</div><div style="color:var(--muted);font-size:12px">Исполнитель</div></div></div>
+    <div class="artist"><img class="avatar" src="./photo/cupsize.jpg" alt=""><div><div>Пошлая Молли</div><div style="color:var(--muted);font-size:12px">Исполнитель</div></div></div>
+    <div class="artist"><img class="avatar" src="./photo/cupsize.jpg" alt=""><div><div>Crystal Castles</div><div style="color:var(--muted);font-size:12px">Исполнитель</div></div></div>
+  </aside>
 
+  <!-- Main -->
+  <section class="glass main">
+    <div class="header">
+      <div class="controls-sm">
+        <button class="round" onclick="history.back()" title="Назад"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="round" onclick="history.forward()" title="Вперёд"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <label class="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="search" placeholder="Поиск по плейлисту">
+      </label>
+    </div>
+
+    <div class="scroll">
+      <div class="title">CUPSIZE — плейлист</div>
+
+      <!-- заголовки -->
+      <div style="display:grid; grid-template-columns:34px 1fr 84px; gap:14px; padding: 6px 12px; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.12em;">
+        <div>#</div><div>Название</div><div style="text-align:center;">Длительность</div>
+      </div>
+
+      <div id="list" style="display:flex; flex-direction:column; gap:6px">
+        <!-- Строки создаются ниже в HTML для наглядности -->
+        <div class="row" data-src="./audio/CUPSIZE - мне похуй.mp3" data-title="мне похуй" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
+          <div class="idx">1</div>
+          <div class="meta"><img class="cover" src="./photo/cupsize.jpg" alt=""><div style="min-width:0"><div class="t1">CUPSIZE — мне похуй</div><div class="t2">CUPSIZE</div></div></div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
+            <span class="dur" data-dur>–:–</span>
+            <button class="play" aria-label="Играть"><i class="fa-solid fa-play"></i></button>
+          </div>
+        </div>
+
+        <div class="row" data-src="./audio/CUPSIZE - вайфуу.mp3" data-title="вайфуу" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
+          <div class="idx">2</div>
+          <div class="meta"><img class="cover" src="./photo/cupsize.jpg" alt=""><div style="min-width:0"><div class="t1">CUPSIZE — вайфуу</div><div class="t2">CUPSIZE</div></div></div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
+            <span class="dur" data-dur>–:–</span>
+            <button class="play" aria-label="Играть"><i class="fa-solid fa-play"></i></button>
+          </div>
+        </div>
+
+        <div class="row" data-src="./audio/CUPSIZE - Вирус.mp3" data-title="Вирус" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
+          <div class="idx">3</div>
+          <div class="meta"><img class="cover" src="./photo/cupsize.jpg" alt=""><div style="min-width:0"><div class="t1">CUPSIZE — Вирус</div><div class="t2">CUPSIZE</div></div></div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
+            <span class="dur" data-dur>–:–</span>
+            <button class="play" aria-label="Играть"><i class="fa-solid fa-play"></i></button>
+          </div>
+        </div>
+
+        <div class="row" data-src="./audio/CUPSIZE - Забуду.mp3" data-title="Забуду" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
+          <div class="idx">4</div>
+          <div class="meta"><img class="cover" src="./photo/cupsize.jpg" alt=""><div style="min-width:0"><div class="t1">CUPSIZE — Забуду</div><div class="t2">CUPSIZE</div></div></div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
+            <span class="dur" data-dur>–:–</span>
+            <button class="play" aria-label="Играть"><i class="fa-solid fa-play"></i></button>
+          </div>
+        </div>
+
+        <div class="row" data-src="./audio/CUPSIZE - лиза, настя.mp3" data-title="лиза, настя" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
+          <div class="idx">5</div>
+          <div class="meta"><img class="cover" src="./photo/cupsize.jpg" alt=""><div style="min-width:0"><div class="t1">CUPSIZE — лиза, настя</div><div class="t2">CUPSIZE</div></div></div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
+            <span class="dur" data-dur>–:–</span>
+            <button class="play" aria-label="Играть"><i class="fa-solid fa-play"></i></button>
+          </div>
+        </div>
+
+        <div class="row" data-src="./audio/CUPSIZE - люби меня, алина.mp3" data-title="люби меня, алина" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
+          <div class="idx">6</div>
+          <div class="meta"><img class="cover" src="./photo/cupsize.jpg" alt=""><div style="min-width:0"><div class="t1">CUPSIZE — люби меня, алина</div><div class="t2">CUPSIZE</div></div></div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
+            <span class="dur" data-dur>–:–</span>
+            <button class="play" aria-label="Играть"><i class="fa-solid fa-play"></i></button>
+          </div>
+        </div>
+
+        <div class="row" data-src="./audio/CUPSIZE - Ты любишь танцевать.mp3" data-title="Ты любишь танцевать" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
+          <div class="idx">7</div>
+          <div class="meta"><img class="cover" src="./photo/cupsize.jpg" alt=""><div style="min-width:0"><div class="t1">CUPSIZE — Ты любишь танцевать</div><div class="t2">CUPSIZE</div></div></div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
+            <span class="dur" data-dur>–:–</span>
+            <button class="play" aria-label="Играть"><i class="fa-solid fa-play"></i></button>
+          </div>
+        </div>
+
+        <div class="row" data-src="./audio/CUPSIZE - Ты любишь травку.mp3" data-title="Ты любишь травку" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
+          <div class="idx">8</div>
+          <div class="meta"><img class="cover" src="./photo/cupsize.jpg" alt=""><div style="min-width:0"><div class="t1">CUPSIZE — Ты любишь травку</div><div class="t2">CUPSIZE</div></div></div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
+            <span class="dur" data-dur>–:–</span>
+            <button class="play" aria-label="Играть"><i class="fa-solid fa-play"></i></button>
+          </div>
+        </div>
+
+        <div class="row" data-src="./audio/CUPSIZE - Я схожу с ума.mp3" data-title="Я схожу с ума" data-artist="CUPSIZE" data-cover="./photo/cupsize.jpg">
+          <div class="idx">9</div>
+          <div class="meta"><img class="cover" src="./photo/cupsize.jpg" alt=""><div style="min-width:0"><div class="t1">CUPSIZE — Я схожу с ума</div><div class="t2">CUPSIZE</div></div></div>
+          <div style="display:flex; align-items:center; justify-content:center; gap:12px;">
+            <span class="dur" data-dur>–:–</span>
+            <button class="play" aria-label="Играть"><i class="fa-solid fa-play"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Now Playing -->
+  <aside class="glass right">
+    <img class="np-cover" id="npCover" src="./photo/cupsize.jpg" alt="cover">
+    <div class="np-title" id="npTitle">Выберите трек</div>
+    <div class="np-artist" id="npArtist">—</div>
+    <div style="height:1px;background:var(--outline);margin:6px 0 2px;"></div>
+    <div style="font-weight:800;opacity:.9">Рекомендации</div>
+    <div style="color:var(--muted);font-size:14px">Похожие клипы появятся здесь, когда начнёте слушать.</div>
+  </aside>
+
+  <!-- Player -->
+  <footer class="glass player">
+    <div class="p-left">
+      <img class="p-cover" id="pCover" src="./photo/cupsize.jpg" alt="">
+      <div style="min-width:0">
+        <div class="p-title" id="pTitle">Ничего не играет</div>
+        <div class="p-artist" id="pArtist">—</div>
+      </div>
+    </div>
+
+    <div class="p-center">
+      <div class="p-controls">
+        <button class="ctl" id="prevBtn" aria-label="Назад"><i class="fa-solid fa-backward-step"></i></button>
+        <button class="ctl primary" id="playBtn" aria-label="Пуск/Пауза"><i class="fa-solid fa-play"></i></button>
+        <button class="ctl" id="nextBtn" aria-label="Вперёд"><i class="fa-solid fa-forward-step"></i></button>
+      </div>
+      <div class="seek">
+        <span id="curTime">0:00</span>
+        <input type="range" id="seek" min="0" max="100" value="0" step="0.1">
+        <span id="durTime">0:00</span>
+      </div>
+    </div>
+
+    <div class="p-right">
+      <button class="ctl" id="muteBtn" aria-label="Звук"><i class="fa-solid fa-volume-high"></i></button>
+      <input type="range" id="vol" class="vol" min="0" max="1" step="0.01" value="1" title="Громкость">
+    </div>
+
+    <audio id="audio" preload="metadata"></audio>
+  </footer>
+
+</div>
+
+<script>
+  // ===== helpers =====
+  const fmt = s => {
+    if (!isFinite(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const ss = Math.floor(s % 60).toString().padStart(2,'0');
+    return `${m}:${ss}`;
+  };
+
+  // ===== elements =====
+  const rows = [...document.querySelectorAll('.row')];
+  const audio = document.getElementById('audio');
+
+  const playBtn = document.getElementById('playBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const muteBtn = document.getElementById('muteBtn');
+
+  const seek = document.getElementById('seek');
+  const cur = document.getElementById('curTime');
+  const dur = document.getElementById('durTime');
+  const vol = document.getElementById('vol');
+
+  const pTitle = document.getElementById('pTitle');
+  const pArtist = document.getElementById('pArtist');
+  const pCover = document.getElementById('pCover');
+
+  const npTitle = document.getElementById('npTitle');
+  const npArtist = document.getElementById('npArtist');
+  const npCover = document.getElementById('npCover');
+
+  const search = document.getElementById('search');
+
+  let currentIndex = -1;
+
+  // предзагрузка длительности для каждой строки
+  rows.forEach(tr => {
+    const a = new Audio();
+    a.src = tr.dataset.src;
+    a.addEventListener('loadedmetadata', ()=>{
+      const el = tr.querySelector('[data-dur]');
+      if (el) el.textContent = fmt(a.duration);
+    }, { once:true });
+  });
+
+  function setNowPlaying(meta){
+    const {title, artist, cover} = meta;
+    pTitle.textContent = `${artist} — ${title}`;
+    pArtist.textContent = artist;
+    pCover.src = cover || './photo/cupsize.jpg';
+
+    npTitle.textContent = `${artist} — ${title}`;
+    npArtist.textContent = artist;
+    npCover.src = cover || './photo/cupsize.jpg';
+  }
+
+  function playIndex(i){
+    if (i < 0 || i >= rows.length) return;
+    currentIndex = i;
+    const tr = rows[i];
+    const { src, title, artist, cover } = tr.dataset;
+    audio.src = src;
+    audio.play();
+
+    setNowPlaying({title, artist, cover});
+    playBtn.firstElementChild.className = 'fa-solid fa-pause';
+
+    rows.forEach(r => r.style.outline = 'none');
+    tr.style.outline = '2px solid rgba(43,240,142,.35)';
+    tr.style.outlineOffset = '2px';
+  }
+
+  rows.forEach((tr, i) => {
+    const btn = tr.querySelector('.play');
+    btn.addEventListener('click', e => { e.stopPropagation(); playIndex(i); });
+    tr.addEventListener('dblclick', () => playIndex(i));
+  });
+
+  // нижний плеер
+  playBtn.addEventListener('click', async () => {
+    if (!audio.src && rows.length) return playIndex(0);
+    if (audio.paused){ await audio.play(); playBtn.firstElementChild.className='fa-solid fa-pause'; }
+    else { audio.pause(); playBtn.firstElementChild.className='fa-solid fa-play'; }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (currentIndex < rows.length - 1) playIndex(currentIndex + 1);
+    else { audio.pause(); playBtn.firstElementChild.className='fa-solid fa-play'; } // конец — без редиректа
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (currentIndex > 0) playIndex(currentIndex - 1);
+    else audio.currentTime = 0;
+  });
+
+  muteBtn.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    muteBtn.firstElementChild.className = audio.muted ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-volume-high';
+  });
+
+  vol.addEventListener('input', () => {
+    audio.volume = +vol.value;
+    audio.muted = (audio.volume === 0);
+    muteBtn.firstElementChild.className = audio.muted ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-volume-high';
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    seek.value = (audio.currentTime / (audio.duration || 1)) * 100;
+    cur.textContent = fmt(audio.currentTime);
+    dur.textContent = fmt(audio.duration);
+  });
+
+  seek.addEventListener('input', () => {
+    if (isFinite(audio.duration)) audio.currentTime = (seek.value/100) * audio.duration;
+  });
+
+  audio.addEventListener('ended', () => {
+    if (currentIndex < rows.length - 1) playIndex(currentIndex + 1);
+    else { audio.pause(); playBtn.firstElementChild.className='fa-solid fa-play'; } // остановка на последнем
+  });
+
+  // поиск по плейлисту
+  search.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    rows.forEach(tr => {
+      const t = `${tr.dataset.title} ${tr.dataset.artist}`.toLowerCase();
+      tr.style.display = t.includes(q) ? '' : 'none';
+    });
+  });
+
+  // если открыли с ?autoplay=1 — стартуем с первого
+  (function(){
+    const u = new URL(location.href);
+    if (u.searchParams.get('autoplay') === '1') playIndex(0);
+  })();
+</script>
 </body>
 </html>
