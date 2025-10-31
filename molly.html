@@ -1,279 +1,208 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Пошлая Молли Playlist</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Пошлая Молли — Плейлист</title>
+
+<link rel="icon" type="image/png" href="./photo/images.jpg">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+
 <style>
-  body {
-    font-family: sans-serif;
-    margin: 0;
-    padding: 20px;
-    background: #0e0e0e;
-    color: #fff;
+  :root{
+    --bg:#0b0b0f;
+    --card:rgba(24,24,32,.72);
+    --outline:rgba(255,255,255,.06);
+    --txt:#f4f6ff;
+    --muted:#a9afc7;
+    --brand:#2bf08e;
+    --brand-2:#00c2ff;
+    --hover:rgba(255,255,255,.06);
   }
-
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    color:var(--txt);
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    background:radial-gradient(1200px 1200px at 80% 10%,rgba(0,194,255,.20),transparent 50%),
+               radial-gradient(900px 900px at 20% 80%,rgba(43,240,142,.18),transparent 50%),
+               var(--bg) url("./photo/images.jpg") center/cover fixed no-repeat;
   }
-
-  .song-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
+  .glass{
+    background:var(--card);
+    border:1px solid var(--outline);
+    border-radius:16px;
+    backdrop-filter:blur(14px) saturate(120%);
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
   }
-
-  .song-btn {
-    background: #e63946;
-    border: none;
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    padding: 14px 24px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: 0.2s;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
+  .app{
+    min-height:100vh;
+    display:grid;
+    grid-template-columns:280px 1fr 360px;
+    grid-template-rows:1fr auto;
+    gap:14px;
+    padding:14px;
   }
-  .song-btn:hover {
-    background: #d62828;
-    transform: scale(1.05);
-  }
-
-  .btrs{
-    position: absolute;
-    top: 30px;   
-    right: 40px; 
-    font-size: 28px;
-  }
-
-  .btrs a{
-    text-decoration: none;
-    color: white;
-  }
-
-  /* 🔘 Фото под плейлистом */
-  .bottom-photo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 60px;
-    margin-bottom: 100px;
-  }
-
-  .bottom-photo img {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: 0 0 25px rgba(0,0,0,0.5);
-    transition: transform 0.3s ease;
-  }
-
-  .bottom-photo img:hover {
-    transform: scale(1.05);
-  }
-
-  /* ПЛЕЕР */
-  .mini-player {
-    position: fixed;
-    bottom: 12px;
-    left: 12px;
-    right: 12px;
-    display: grid;
-    grid-template-columns: 56px 1fr auto;
-    gap: 12px;
-    align-items: center;
-    padding: 10px 12px;
-    background: rgba(20, 20, 20, 0.85);
-    color: #fff;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.25);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(20px);
-    transition: all 0.4s ease;
-    z-index: 9999;
-  }
-
-  .mini-player.visible {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
-
-  .mp-cover {
-    width: 56px; height: 56px; border-radius: 10px; object-fit: cover;
-  }
-
-  .mp-center { min-width: 0; }
-  .mp-title { font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .mp-artist { font-size: 12px; color: #b5b5b5; margin-top: 2px; }
-
-  .mp-seek {
-    -webkit-appearance: none;
-    appearance: none;          
-    width: 100%; height: 4px; background: #3a3a3a; border-radius: 999px; margin: 8px 0 4px;
-  }
-
-  .mp-seek::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 14px; height: 14px; border-radius: 50%;
-    background: #e63946;
-  }
-
-  .mp-time { display: flex; justify-content: space-between; font-size: 11px; color: #b5b5b5; }
-  .mp-controls { display: flex; gap: 8px; align-items: center; }
-  .mp-btn {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: #2a2a2a; color: #fff; border: none; cursor: pointer;
-    font-size: 16px; display: grid; place-items: center;
-    transition: transform .1s ease, background .2s ease;
-  }
-  .mp-btn:active { transform: scale(.95); }
-  .mp-play.playing { background: #e63946; }
-
-  @media (max-width: 480px) {
-    .mini-player { grid-template-columns: 48px 1fr auto; padding: 8px 10px; }
-    .mp-cover { width: 48px; height: 48px; }
-    .mp-title { font-size: 14px; }
-    .mp-artist { display: none; }
-    .song-btn { font-size: 16px; }
-  }
+  .sidebar{padding:14px;display:flex;flex-direction:column;gap:12px;}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;}
+  .brand i{color:var(--brand);}
+  .nav{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+  .nav a{text-decoration:none;color:var(--txt);padding:10px 12px;border-radius:10px;display:flex;align-items:center;gap:12px;font-weight:600;}
+  .nav a:hover{background:var(--hover);}
+  .aside-title{font-size:12px;color:var(--muted);text-transform:uppercase;margin:10px 6px 4px;}
+  .artist{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;cursor:pointer;}
+  .artist:hover{background:var(--hover);}
+  .avatar{width:36px;height:36px;border-radius:8px;object-fit:cover;}
+  .main{display:flex;flex-direction:column;overflow:hidden;}
+  .header{padding:16px;display:flex;align-items:center;justify-content:space-between;}
+  .controls-sm{display:flex;gap:8px;}
+  .round{width:36px;height:36px;border-radius:999px;border:1px solid var(--outline);display:grid;place-items:center;background:rgba(0,0,0,.35);color:var(--txt);cursor:pointer;}
+  .search{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid var(--outline);background:rgba(0,0,0,.35);min-width:260px;}
+  .search input{border:none;background:transparent;color:var(--txt);outline:none;width:100%;font-size:14px;}
+  .scroll{overflow:auto;padding:4px 14px 140px;}
+  .title{font-size:clamp(22px,3.2vw,40px);font-weight:900;letter-spacing:.3px;margin:6px 8px 14px;}
+  .row{display:grid;grid-template-columns:34px 1fr 84px;align-items:center;gap:14px;padding:12px 12px;border-radius:12px;transition:background .15s ease,transform .08s ease;}
+  .row:hover{background:var(--hover);}
+  .idx{text-align:right;color:var(--muted);}
+  .meta{display:flex;align-items:center;gap:12px;min-width:0;}
+  .cover{width:56px;height:56px;border-radius:12px;object-fit:cover;box-shadow:0 8px 20px rgba(0,0,0,.35);}
+  .t1{font-weight:800;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .t2{color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .play{width:40px;height:40px;border-radius:12px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#04130f;display:grid;place-items:center;font-size:16px;}
+  .dur{color:var(--muted);}
+  .right{padding:14px;display:flex;flex-direction:column;gap:14px;}
+  .np-cover{width:100%;aspect-ratio:1/1;border-radius:16px;object-fit:cover;box-shadow:0 20px 40px rgba(0,0,0,.45);}
+  .np-title{font-weight:900;font-size:18px;}
+  .np-artist{color:var(--muted);margin-top:-6px;}
+  .player{grid-column:1/-1;display:grid;grid-template-columns:1.1fr 2fr 1.1fr;align-items:center;gap:14px;padding:12px 16px;border-radius:16px;border:1px solid var(--outline);backdrop-filter:blur(10px) saturate(130%);background:rgba(10,12,16,.72);}
+  .p-left{display:flex;align-items:center;gap:12px;min-width:0;}
+  .p-cover{width:60px;height:60px;border-radius:12px;object-fit:cover;}
+  .p-title{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .p-artist{color:var(--muted);font-size:13px;}
+  .p-center{display:flex;flex-direction:column;align-items:center;gap:10px;}
+  .p-controls{display:flex;align-items:center;gap:14px;}
+  .ctl{width:42px;height:42px;border-radius:12px;border:1px solid var(--outline);background:rgba(255,255,255,.06);color:var(--txt);display:grid;place-items:center;cursor:pointer;}
+  .ctl.primary{width:58px;height:58px;font-size:18px;border:none;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#04130f;}
+  .seek{width:92%;display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted);}
+  input[type="range"]{-webkit-appearance:none;width:100%;height:6px;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--brand-2));outline:none;}
+  input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:4px solid #101622;}
+  .p-right{display:flex;align-items:center;gap:10px;justify-content:flex-end;}
+  .vol{width:160px;}
 </style>
 </head>
 <body>
-<a style="text-decoration: none; color: rgb(255, 255, 255); font-size: 30px;" href="music.html">НАЗАД</a>
-<h1>🎧 Пошлая Молли Playlist</h1>
 
-<div class="song-list">
-  <button class="song-btn" data-src="./audio/Пошлая Молли - Ты разбила папину машину.mp3">Пошлая Молли — Ты разбила папину машину</button>
-  <button class="song-btn" data-src="./audio/Пошлая Молли - Супермаркет(slowed & reverb).mp3">Пошлая Молли — Супермаркет (slowed & reverb)</button>
-  <button class="song-btn" data-src="./audio/Пошлая Молли - Стрип клаб.mp3">Пошлая Молли — Стрип клаб</button>
-  <button class="song-btn" data-src="./audio/Пошлая Молли - Мишка (feat. KATERINA).mp3">Пошлая Молли — Мишка (feat. KATERINA)</button>
-  <button class="song-btn" data-src="./audio/Пошлая Молли - Беспечный рыцарь тьмы.mp3">Пошлая Молли — Беспечный рыцарь тьмы</button>
-  <button class="song-btn" data-src="./audio/Пошлая Молли - Клеопатри.mp3">Пошлая Молли — Клеопатри</button>
-  <button class="song-btn" data-src="./audio/Пошлая Молли - Дом Периньон (feat. Элджей).mp3">Пошлая Молли — Дом Периньон (feat. Элджей)</button>
-  <button class="song-btn" data-src="./audio/Пошлая Молли - Буду песиком.mp3">Пошлая Молли — Буду песиком</button>
-  <button class="song-btn" data-src="./audio/Пошлая Молли - Контракт.mp3">Пошлая Молли — Контракт</button>
-  <button class="song-btn" data-src="./audio/Пошлая Молли feat. Молодой Платон - Школьник.mp3">Пошлая Молли feat. Молодой Платон — Школьник</button>
-  <button class="song-btn" data-src="./audio/Пошлая Молли - Ханнамонтана.mp3">Пошлая Молли — Ханнамонтана</button>
-  <button class="song-btn" data-src="./audio/Пошлая Молли - Нон стоп.mp3">Пошлая Молли — Нон стоп</button>
-  <button class="song-btn" data-src="./audio/Пошлая Молли - Значит дружба.mp3">Пошлая Молли — Значит дружба</button>
-  <button class="song-btn" data-src="./audio/Пошлая Молли - Райские цветы.mp3">Пошлая Молли — Райские цветы</button>
-</div>
+<div class="app">
 
-<!-- 🔘 Округлённая фотография -->
-<div class="bottom-photo">
-  <img src="./photo/1200_6549cd6782682c29145b705f.jpg" alt="Пошлая Молли">
-  <!-- ↑ Укажи путь к своей фотографии здесь -->
-</div>
+  <aside class="glass sidebar">
+    <div class="brand"><i class="fa-solid fa-bolt"></i><span>EXP</span></div>
+    <nav class="nav">
+      <a href="music.html"><i class="fa-solid fa-fire"></i> Главная</a>
+      <a href="#"><i class="fa-solid fa-magnifying-glass"></i> Поиск</a>
+      <a href="#"><i class="fa-solid fa-rectangle-list"></i> Медиатека</a>
+    </nav>
+    <div class="aside-title">Исполнители</div>
+    <div class="artist"><img class="avatar" src="./photo/images.jpg"><div><div>CUPSIZE</div><div style="color:var(--muted);font-size:12px">Исполнитель</div></div></div>
+    <div class="artist"><img class="avatar" src="./photo/images.jpg"><div><div>Пошлая Молли</div><div style="color:var(--muted);font-size:12px">Исполнитель</div></div></div>
+    <div class="artist"><img class="avatar" src="./photo/images.jpg"><div><div>Кишлак</div><div style="color:var(--muted);font-size:12px">Исполнитель</div></div></div>
+  </aside>
 
-<!-- Плеер -->
-<div class="mini-player" id="player">
-  <img class="mp-cover" src="./photo/molly.jpg" alt="cover">
-  <div class="mp-center">
-    <div class="mp-title">—</div>
-    <div class="mp-artist">Пошлая Молли</div>
-    <input type="range" class="mp-seek" min="0" max="100" value="0" step="0.1">
-    <div class="mp-time"><span class="mp-current">0:00</span><span class="mp-duration">0:00</span></div>
-  </div>
-  <div class="mp-controls">
-    <button class="mp-btn mp-play" aria-label="play/pause">▶</button>
-    <button class="mp-btn mp-mute" aria-label="mute">🔊</button>
-  </div>
-  <audio id="mp-audio" preload="metadata"></audio>
-</div>
+  <section class="glass main">
+    <div class="header">
+      <div class="controls-sm">
+        <button class="round" onclick="history.back()"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="round" onclick="history.forward()"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <label class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="search" placeholder="Поиск по плейлисту"></label>
+    </div>
 
-<!-- 🔗 Кнопка перехода к следующему исполнителю -->
-<div class="btrs">
-  <a href="kishlak.html">СЛЕДУЮЩИЙ</a>
-  <!-- ↑ Здесь укажи путь к следующей странице исполнителя -->
+    <div class="scroll">
+      <div class="title">Пошлая Молли — плейлист</div>
+      <div style="display:grid;grid-template-columns:34px 1fr 84px;gap:14px;padding:6px 12px;color:var(--muted);font-size:12px;text-transform:uppercase;">
+        <div>#</div><div>Название</div><div style="text-align:center;">Длительность</div>
+      </div>
+
+      <div id="list" style="display:flex;flex-direction:column;gap:6px">
+        <script>
+          const tracks=[
+            "Ты разбила папину машину","Супермаркет (slowed & reverb)","Стрип клаб","Мишка (feat. KATERINA)","Беспечный рыцарь тьмы","Клеопатри","Дом Периньон (feat. Элджей)","Буду песиком","Контракт","feat. Молодой Платон — Школьник","Ханнамонтана","Нон стоп","Значит дружба","Райские цветы"];
+          const list=document.currentScript.parentElement;
+          tracks.forEach((t,i)=>list.insertAdjacentHTML('beforeend',`
+          <div class="row" data-src="./audio/Пошлая Молли - ${t}.mp3" data-title="${t}" data-artist="Пошлая Молли" data-cover="./photo/images.jpg">
+            <div class="idx">${i+1}</div>
+            <div class="meta"><img class="cover" src="./photo/images.jpg"><div><div class="t1">Пошлая Молли — ${t}</div><div class="t2">Пошлая Молли</div></div></div>
+            <div style="display:flex;align-items:center;gap:12px;"><span class="dur" data-dur>–:–</span><button class="play"><i class="fa-solid fa-play"></i></button></div>
+          </div>`));
+        </script>
+      </div>
+    </div>
+  </section>
+
+  <aside class="glass right">
+    <img class="np-cover" id="npCover" src="./photo/images.jpg">
+    <div class="np-title" id="npTitle">Выберите трек</div>
+    <div class="np-artist" id="npArtist">—</div>
+  </aside>
+
+  <footer class="glass player">
+    <div class="p-left">
+      <img class="p-cover" id="pCover" src="./photo/images.jpg">
+      <div><div class="p-title" id="pTitle">Ничего не играет</div><div class="p-artist" id="pArtist">—</div></div>
+    </div>
+    <div class="p-center">
+      <div class="p-controls">
+        <button class="ctl" id="prevBtn"><i class="fa-solid fa-backward-step"></i></button>
+        <button class="ctl primary" id="playBtn"><i class="fa-solid fa-play"></i></button>
+        <button class="ctl" id="nextBtn"><i class="fa-solid fa-forward-step"></i></button>
+      </div>
+      <div class="seek">
+        <span id="curTime">0:00</span>
+        <input type="range" id="seek" min="0" max="100" value="0" step="0.1">
+        <span id="durTime">0:00</span>
+      </div>
+    </div>
+    <div class="p-right">
+      <button class="ctl" id="muteBtn"><i class="fa-solid fa-volume-high"></i></button>
+      <input type="range" id="vol" class="vol" min="0" max="1" step="0.01" value="1">
+    </div>
+    <audio id="audio" preload="metadata"></audio>
+  </footer>
 </div>
 
 <script>
-  const songs = Array.from(document.querySelectorAll('.song-btn'));
-  const player = document.getElementById('player');
-  const audio = document.getElementById('mp-audio');
-  const playBtn = document.querySelector('.mp-play');
-  const muteBtn = document.querySelector('.mp-mute');
-  const seek = document.querySelector('.mp-seek');
-  const cur = document.querySelector('.mp-current');
-  const dur = document.querySelector('.mp-duration');
-  const title = document.querySelector('.mp-title');
-  const artist = document.querySelector('.mp-artist');
-  let currentIndex = 0;
-
-  const fmt = s => {
-    if (isNaN(s)) return '0:00';
-    const m = Math.floor(s / 60);
-    const ss = Math.floor(s % 60).toString().padStart(2,'0');
-    return `${m}:${ss}`;
-  };
-
-  songs.forEach((btn, index) => {
-    btn.addEventListener('click', () => {
-      const src = btn.dataset.src;
-      const t = btn.textContent;
-      currentIndex = index;
-      audio.src = src;
-      title.textContent = t;
-      player.classList.add('visible');
-      audio.play();
-      playBtn.textContent = '⏸';
-      playBtn.classList.add('playing');
-    });
-  });
-
-  playBtn.addEventListener('click', async () => {
-    if (audio.paused) {
-      await audio.play();
-      playBtn.textContent = '⏸';
-      playBtn.classList.add('playing');
-    } else {
-      audio.pause();
-      playBtn.textContent = '▶';
-      playBtn.classList.remove('playing');
-    }
-  });
-
-  muteBtn.addEventListener('click', () => {
-    audio.muted = !audio.muted;
-    muteBtn.textContent = audio.muted ? '🔈' : '🔊';
-  });
-
-  audio.addEventListener('timeupdate', () => {
-    const p = (audio.currentTime / audio.duration) * 100 || 0;
-    seek.value = p;
-    cur.textContent = fmt(audio.currentTime);
-  });
-
-  seek.addEventListener('input', () => {
-    if (!isNaN(audio.duration)) {
-      audio.currentTime = (seek.value / 100) * audio.duration;
-    }
-  });
-
-  audio.addEventListener('loadedmetadata', () => {
-    dur.textContent = fmt(audio.duration);
-  });
-
-audio.addEventListener('ended', () => {
-  currentIndex++;
-  if (currentIndex < songs.length) {
-    songs[currentIndex].click();
-  } else {
-    // ✅ после последней песни переходит на следующую страницу
-    window.location.href = "kishlak.html";
-  }
-});
-
+const fmt=s=>isFinite(s)?`${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`:'0:00';
+const rows=[...document.querySelectorAll('.row')];
+const audio=document.getElementById('audio');
+const playBtn=document.getElementById('playBtn');
+const nextBtn=document.getElementById('nextBtn');
+const prevBtn=document.getElementById('prevBtn');
+const muteBtn=document.getElementById('muteBtn');
+const seek=document.getElementById('seek');
+const cur=document.getElementById('curTime');
+const dur=document.getElementById('durTime');
+const vol=document.getElementById('vol');
+const pTitle=document.getElementById('pTitle');
+const pArtist=document.getElementById('pArtist');
+const pCover=document.getElementById('pCover');
+const npTitle=document.getElementById('npTitle');
+const npArtist=document.getElementById('npArtist');
+const npCover=document.getElementById('npCover');
+const search=document.getElementById('search');
+let current=-1;
+rows.forEach(r=>{const a=new Audio();a.src=r.dataset.src;a.addEventListener('loadedmetadata',()=>r.querySelector('[data-dur]').textContent=fmt(a.duration),{once:true});});
+function setMeta(t,a,c){pTitle.textContent=`${a} — ${t}`;pArtist.textContent=a;pCover.src=c;npTitle.textContent=`${a} — ${t}`;npArtist.textContent=a;npCover.src=c;}
+function playIndex(i){if(i<0||i>=rows.length)return;current=i;const r=rows[i];audio.src=r.dataset.src;audio.play();setMeta(r.dataset.title,r.dataset.artist,r.dataset.cover);playBtn.firstElementChild.className='fa-solid fa-pause';rows.forEach(x=>x.style.outline='none');r.style.outline='2px solid rgba(43,240,142,.35)';}
+rows.forEach((r,i)=>r.querySelector('.play').onclick=e=>{e.stopPropagation();playIndex(i);});
+playBtn.onclick=()=>{if(!audio.src)return playIndex(0);if(audio.paused){audio.play();playBtn.firstElementChild.className='fa-solid fa-pause';}else{audio.pause();playBtn.firstElementChild.className='fa-solid fa-play';}};
+nextBtn.onclick=()=>{if(current<rows.length-1)playIndex(current+1);else audio.pause();};
+prevBtn.onclick=()=>{if(current>0)playIndex(current-1);else audio.currentTime=0;};
+muteBtn.onclick=()=>{audio.muted=!audio.muted;muteBtn.firstElementChild.className=audio.muted?'fa-solid fa-volume-xmark':'fa-solid fa-volume-high';};
+vol.oninput=()=>{audio.volume=+vol.value;audio.muted=(audio.volume===0);muteBtn.firstElementChild.className=audio.muted?'fa-solid fa-volume-xmark':'fa-solid fa-volume-high';};
+audio.ontimeupdate=()=>{seek.value=(audio.currentTime/(audio.duration||1))*100;cur.textContent=fmt(audio.currentTime);dur.textContent=fmt(audio.duration);};
+seek.oninput=()=>{if(isFinite(audio.duration))audio.currentTime=(seek.value/100)*audio.duration;};
+audio.onended=()=>{if(current<rows.length-1)playIndex(current+1);else{audio.pause();playBtn.firstElementChild.className='fa-solid fa-play';}};
+search.oninput=()=>{const q=search.value.toLowerCase();rows.forEach(r=>{r.style.display=(r.dataset.title+r.dataset.artist).toLowerCase().includes(q)?'':'none';});};
 </script>
 </body>
 </html>

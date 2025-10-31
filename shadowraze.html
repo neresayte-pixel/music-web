@@ -1,270 +1,198 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shadowraze Playlist</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shadowraze — Плейлист</title>
+
+<link rel="icon" type="image/png" href="./photo/maxresdefault.jpg">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+
 <style>
-  body {
-    font-family: sans-serif;
-    margin: 0;
-    padding: 20px;
-    background: #0e0e0e;
-    color: #fff;
-  }
-
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .song-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .song-btn {
-    background: #ff8c00; /* 🟠 оранжевый */
-    border: none;
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    padding: 14px 24px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: 0.2s;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-  }
-  .song-btn:hover {
-    background: #e67600;
-    transform: scale(1.05);
-  }
-
-  /* 🔘 Фото под плейлистом */
-  .bottom-photo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 60px;
-    margin-bottom: 100px;
-  }
-
-  .bottom-photo img {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: 0 0 25px rgba(0,0,0,0.5);
-    transition: transform 0.3s ease;
-  }
-
-  .bottom-photo img:hover {
-    transform: scale(1.05);
-  }
-
-  /* Мини-плеер */
-  .mini-player {
-    position: fixed;
-    bottom: 12px;
-    left: 12px;
-    right: 12px;
-    display: grid;
-    grid-template-columns: 56px 1fr auto;
-    gap: 12px;
-    align-items: center;
-    padding: 10px 12px;
-    background: rgba(20, 20, 20, 0.85);
-    color: #fff;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.25);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(20px);
-    transition: all 0.4s ease;
-    z-index: 9999;
-  }
-
-  .btrs{
-    position: absolute;
-    top: 30px;   
-    right: 40px; 
-    font-size: 28px;
-  }
-
-  .btrs a{
-    text-decoration: none;
-    color: white;
-  }
-
-  .mini-player.visible {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
-
-  .mp-cover {
-    width: 56px; height: 56px; border-radius: 10px; object-fit: cover;
-  }
-
-  .mp-center { min-width: 0; }
-  .mp-title { font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .mp-artist { font-size: 12px; color: #b5b5b5; margin-top: 2px; }
-
-  .mp-seek {
-    -webkit-appearance: none;
-     appearance: none;          
-    width: 100%; height: 4px; background: #3a3a3a; border-radius: 999px; margin: 8px 0 4px;
-  }
-  .mp-seek::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 14px; height: 14px; border-radius: 50%;
-    background: #ff8c00;
-  }
-
-  .mp-time { display: flex; justify-content: space-between; font-size: 11px; color: #b5b5b5; }
-  .mp-controls { display: flex; gap: 8px; align-items: center; }
-  .mp-btn {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: #2a2a2a; color: #fff; border: none; cursor: pointer;
-    font-size: 16px; display: grid; place-items: center;
-    transition: transform .1s ease, background .2s ease;
-  }
-  .mp-btn:active { transform: scale(.95); }
-  .mp-play.playing { background: #ff8c00; }
-
-  @media (max-width: 480px) {
-    .mini-player { grid-template-columns: 48px 1fr auto; padding: 8px 10px; }
-    .mp-cover { width: 48px; height: 48px; }
-    .mp-title { font-size: 14px; }
-    .mp-artist { display: none; }
-    .song-btn { font-size: 16px; }
-  }
+:root {
+  --bg:#0b0b0f;
+  --card:rgba(24,24,32,.72);
+  --outline:rgba(255,255,255,.06);
+  --txt:#f4f6ff;
+  --muted:#a9afc7;
+  --brand:#2bf08e;
+  --brand-2:#00c2ff;
+  --hover:rgba(255,255,255,.06);
+}
+*{box-sizing:border-box;}
+body {
+  margin:0;color:var(--txt);font-family:Inter,system-ui,sans-serif;
+  background:linear-gradient(-45deg,#00111a,#001a14,#00222c,#000d14);
+  background-size:400% 400%;
+  animation:bgmove 16s ease infinite;
+}
+@keyframes bgmove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.glass{background:var(--card);border:1px solid var(--outline);border-radius:16px;backdrop-filter:blur(14px) saturate(120%);box-shadow:0 20px 50px rgba(0,0,0,.35);}
+.app{min-height:100vh;display:grid;grid-template-columns:280px 1fr 360px;grid-template-rows:1fr auto;gap:14px;padding:14px;}
+.sidebar{padding:14px;display:flex;flex-direction:column;gap:12px;}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;}
+.brand i{color:var(--brand);}
+.nav{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+.nav a{text-decoration:none;color:var(--txt);padding:10px 12px;border-radius:10px;display:flex;align-items:center;gap:12px;font-weight:600;}
+.nav a:hover{background:var(--hover);}
+.aside-title{font-size:12px;color:var(--muted);text-transform:uppercase;margin:10px 6px 4px;}
+.artist{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;cursor:pointer;}
+.artist:hover{background:var(--hover);}
+.avatar{width:36px;height:36px;border-radius:8px;object-fit:cover;}
+.main{display:flex;flex-direction:column;overflow:hidden;}
+.header{padding:16px;display:flex;align-items:center;justify-content:space-between;}
+.controls-sm{display:flex;gap:8px;}
+.round{width:36px;height:36px;border-radius:999px;border:1px solid var(--outline);display:grid;place-items:center;background:rgba(0,0,0,.35);color:var(--txt);cursor:pointer;}
+.search{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid var(--outline);background:rgba(0,0,0,.35);min-width:260px;}
+.search input{border:none;background:transparent;color:var(--txt);outline:none;width:100%;font-size:14px;}
+.scroll{overflow:auto;padding:4px 14px 140px;}
+.title{font-size:clamp(22px,3vw,38px);font-weight:900;margin:6px 8px 14px;}
+.row{display:grid;grid-template-columns:34px 1fr 84px;align-items:center;gap:14px;padding:12px;border-radius:12px;transition:.15s;}
+.row:hover{background:var(--hover);}
+.idx{text-align:right;color:var(--muted);}
+.meta{display:flex;align-items:center;gap:12px;min-width:0;}
+.cover{width:56px;height:56px;border-radius:12px;object-fit:cover;}
+.t1{font-weight:800;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.t2{color:var(--muted);font-size:13px;}
+.play{width:40px;height:40px;border-radius:12px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#04130f;display:grid;place-items:center;}
+.dur{color:var(--muted);}
+.right{padding:14px;display:flex;flex-direction:column;gap:14px;}
+.np-cover{width:100%;aspect-ratio:1/1;border-radius:16px;object-fit:cover;}
+.np-title{font-weight:900;font-size:18px;}
+.np-artist{color:var(--muted);margin-top:-6px;}
+.player{grid-column:1/-1;display:grid;grid-template-columns:1.1fr 2fr 1.1fr;align-items:center;gap:14px;padding:12px 16px;border-radius:16px;border:1px solid var(--outline);background:rgba(10,12,16,.72);backdrop-filter:blur(10px);}
+.p-left{display:flex;align-items:center;gap:12px;min-width:0;}
+.p-cover{width:60px;height:60px;border-radius:12px;object-fit:cover;}
+.p-title{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.p-artist{color:var(--muted);font-size:13px;}
+.p-center{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.p-controls{display:flex;align-items:center;gap:14px;}
+.ctl{width:42px;height:42px;border-radius:12px;border:1px solid var(--outline);background:rgba(255,255,255,.06);color:var(--txt);display:grid;place-items:center;cursor:pointer;}
+.ctl.primary{width:58px;height:58px;font-size:18px;border:none;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#04130f;}
+.seek{width:92%;display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted);}
+input[type="range"]{-webkit-appearance:none;width:100%;height:6px;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--brand-2));outline:none;}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:4px solid #101622;}
+.p-right{display:flex;align-items:center;gap:10px;justify-content:flex-end;}
+.vol{width:160px;}
+@media(max-width:760px){
+  .app{grid-template-columns:1fr;grid-template-rows:1fr auto;padding:10px;gap:10px;}
+  .sidebar{display:none;}
+  .ctl{width:60px;height:60px;font-size:20px;}
+  .ctl.primary{width:76px;height:76px;font-size:26px;}
+}
 </style>
 </head>
 <body>
-<a style="text-decoration: none; color: #ffffff; font-size: 30px;" href="music.html">НАЗАД</a>
-<h1>🎧 Shadowraze Playlist</h1>
 
-<div class="song-list">
-  <button class="song-btn" data-src="./audio/Shadowraze feat. Jzxdx - 44.mp3">Shadowraze feat. Jzxdx — 44</button>
-  <button class="song-btn" data-src="./audio/Shadowraze - Shadowfiend.mp3">Shadowraze — Shadowfiend</button>
-  <button class="song-btn" data-src="./audio/Shadowraze - Juggernaut.mp3">Shadowraze — Juggernaut</button>
-  <button class="song-btn" data-src="./audio/Shadowraze - Showdown.mp3">Shadowraze — Showdown</button>
-  <button class="song-btn" data-src="./audio/Shadowraze feat. Jzxdx - Skyline Ryodan.mp3">Shadowraze feat. Jzxdx — Skyline Ryodan</button>
-  <button class="song-btn" data-src="./audio/Shadowraze - Zitraks Mode.mp3">Shadowraze — Zitraks Mode</button>
-  <button class="song-btn" data-src="./audio/Shadowraze - Astral Step.mp3">Shadowraze — Astral Step</button>
-  <button class="song-btn" data-src="./audio/Shadowraze - Холод.mp3">Shadowraze — Холод</button>
-</div>
+<div class="app">
 
-<!-- 🔘 Округлённая фотография -->
-<div class="bottom-photo">
-  <img src="./photo/maxresdefault.jpg" alt="Shadowraze">
-  <!-- ↑ Здесь укажи путь к фото -->
-</div>
+  <aside class="glass sidebar">
+    <div class="brand"><i class="fa-solid fa-bolt"></i><span>EXP</span></div>
+    <nav class="nav">
+      <a href="#"><i class="fa-solid fa-fire"></i> Главная</a>
+      <a href="#"><i class="fa-solid fa-magnifying-glass"></i> Поиск</a>
+      <a href="#"><i class="fa-solid fa-rectangle-list"></i> Медиатека</a>
+    </nav>
+    <div class="aside-title">Исполнители</div>
+    <div class="artist"><img class="avatar" src="./photo/maxresdefault.jpg"><div><div>Shadowraze</div><div style="color:var(--muted);font-size:12px">Исполнитель</div></div></div>
+  </aside>
 
-<div class="mini-player" id="player">
-  <img class="mp-cover" src="./photo/shadowraze.jpg" alt="cover">
-  <div class="mp-center">
-    <div class="mp-title">—</div>
-    <div class="mp-artist">Shadowraze</div>
-    <input type="range" class="mp-seek" min="0" max="100" value="0" step="0.1">
-    <div class="mp-time"><span class="mp-current">0:00</span><span class="mp-duration">0:00</span></div>
-  </div>
-  <div class="mp-controls">
-    <button class="mp-btn mp-play" aria-label="play/pause">▶</button>
-    <button class="mp-btn mp-mute" aria-label="mute">🔊</button>
-  </div>
-  <audio id="mp-audio" preload="metadata"></audio>
-</div>
+  <section class="glass main">
+    <div class="header">
+      <div class="controls-sm">
+        <button class="round" onclick="history.back()"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="round" onclick="history.forward()"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <label class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="search" placeholder="Поиск по плейлисту"></label>
+    </div>
 
-<!-- 🔗 Кнопка перехода -->
-<div class="btrs">
-  <a href="mother.html">СЛЕДУЮЩИЙ</a>
-  <!-- ↑ Здесь укажи путь к следующему исполнителю -->
+    <div class="scroll">
+      <div class="title">Shadowraze — плейлист</div>
+
+      <div style="display:grid;grid-template-columns:34px 1fr 84px;gap:14px;padding:6px 12px;color:var(--muted);font-size:12px;text-transform:uppercase;">
+        <div>#</div><div>Название</div><div style="text-align:center;">Длительность</div>
+      </div>
+
+      <div id="list" style="display:flex;flex-direction:column;gap:6px">
+        <div class="row" data-src="./audio/shadowraze_astral_step.mp3" data-title="Astral Step" data-artist="Shadowraze" data-cover="./photo/maxresdefault.jpg">
+          <div class="idx">1</div>
+          <div class="meta"><img class="cover" src="./photo/maxresdefault.jpg"><div><div class="t1">Shadowraze — Astral Step</div><div class="t2">Shadowraze</div></div></div>
+          <div><span class="dur" data-dur>–:–</span><button class="play"><i class="fa-solid fa-play"></i></button></div>
+        </div>
+        <div class="row" data-src="./audio/shadowraze_juggernaut.mp3" data-title="Juggernaut" data-artist="Shadowraze" data-cover="./photo/maxresdefault.jpg">
+          <div class="idx">2</div>
+          <div class="meta"><img class="cover" src="./photo/maxresdefault.jpg"><div><div class="t1">Shadowraze — Juggernaut</div><div class="t2">Shadowraze</div></div></div>
+          <div><span class="dur" data-dur>–:–</span><button class="play"><i class="fa-solid fa-play"></i></button></div>
+        </div>
+        <div class="row" data-src="./audio/shadowraze_shadowfiend.mp3" data-title="Shadowfiend" data-artist="Shadowraze" data-cover="./photo/maxresdefault.jpg">
+          <div class="idx">3</div>
+          <div class="meta"><img class="cover" src="./photo/maxresdefault.jpg"><div><div class="t1">Shadowraze — Shadowfiend</div><div class="t2">Shadowraze</div></div></div>
+          <div><span class="dur" data-dur>–:–</span><button class="play"><i class="fa-solid fa-play"></i></button></div>
+        </div>
+        <div class="row" data-src="./audio/shadowraze_showdown.mp3" data-title="Showdown" data-artist="Shadowraze" data-cover="./photo/maxresdefault.jpg">
+          <div class="idx">4</div>
+          <div class="meta"><img class="cover" src="./photo/maxresdefault.jpg"><div><div class="t1">Shadowraze — Showdown</div><div class="t2">Shadowraze</div></div></div>
+          <div><span class="dur" data-dur>–:–</span><button class="play"><i class="fa-solid fa-play"></i></button></div>
+        </div>
+        <div class="row" data-src="./audio/shadowraze_zitraks_mode.mp3" data-title="Zitraks Mode" data-artist="Shadowraze" data-cover="./photo/maxresdefault.jpg">
+          <div class="idx">5</div>
+          <div class="meta"><img class="cover" src="./photo/maxresdefault.jpg"><div><div class="t1">Shadowraze — Zitraks Mode</div><div class="t2">Shadowraze</div></div></div>
+          <div><span class="dur" data-dur>–:–</span><button class="play"><i class="fa-solid fa-play"></i></button></div>
+        </div>
+        <div class="row" data-src="./audio/shadowraze_holod.mp3" data-title="Холод" data-artist="Shadowraze" data-cover="./photo/maxresdefault.jpg">
+          <div class="idx">6</div>
+          <div class="meta"><img class="cover" src="./photo/maxresdefault.jpg"><div><div class="t1">Shadowraze — Холод</div><div class="t2">Shadowraze</div></div></div>
+          <div><span class="dur" data-dur>–:–</span><button class="play"><i class="fa-solid fa-play"></i></button></div>
+        </div>
+        <div class="row" data-src="./audio/shadowraze_skyline_ryodan.mp3" data-title="Skyline Ryodan (feat. Jzxdx)" data-artist="Shadowraze" data-cover="./photo/maxresdefault.jpg">
+          <div class="idx">7</div>
+          <div class="meta"><img class="cover" src="./photo/maxresdefault.jpg"><div><div class="t1">Shadowraze feat. Jzxdx — Skyline Ryodan</div><div class="t2">Shadowraze</div></div></div>
+          <div><span class="dur" data-dur>–:–</span><button class="play"><i class="fa-solid fa-play"></i></button></div>
+        </div>
+        <div class="row" data-src="./audio/shadowraze_44.mp3" data-title="44 (feat. Jzxdx)" data-artist="Shadowraze" data-cover="./photo/maxresdefault.jpg">
+          <div class="idx">8</div>
+          <div class="meta"><img class="cover" src="./photo/maxresdefault.jpg"><div><div class="t1">Shadowraze feat. Jzxdx — 44</div><div class="t2">Shadowraze</div></div></div>
+          <div><span class="dur" data-dur>–:–</span><button class="play"><i class="fa-solid fa-play"></i></button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="glass right">
+    <img class="np-cover" id="npCover" src="./photo/maxresdefault.jpg" alt="">
+    <div class="np-title" id="npTitle">Выберите трек</div>
+    <div class="np-artist" id="npArtist">—</div>
+  </aside>
+
+  <footer class="glass player">
+    <div class="p-left">
+      <img class="p-cover" id="pCover" src="./photo/maxresdefault.jpg" alt="">
+      <div><div class="p-title" id="pTitle">Ничего не играет</div><div class="p-artist" id="pArtist">—</div></div>
+    </div>
+    <div class="p-center">
+      <div class="p-controls">
+        <button class="ctl" id="prevBtn"><i class="fa-solid fa-backward-step"></i></button>
+        <button class="ctl primary" id="playBtn"><i class="fa-solid fa-play"></i></button>
+        <button class="ctl" id="nextBtn"><i class="fa-solid fa-forward-step"></i></button>
+      </div>
+      <div class="seek"><span id="curTime">0:00</span><input type="range" id="seek" min="0" max="100" value="0"><span id="durTime">0:00</span></div>
+    </div>
+    <div class="p-right"><button class="ctl" id="muteBtn"><i class="fa-solid fa-volume-high"></i></button><input type="range" id="vol" class="vol" min="0" max="1" step="0.01" value="1"></div>
+    <audio id="audio" preload="metadata"></audio>
+  </footer>
+
 </div>
 
 <script>
-  const songs = Array.from(document.querySelectorAll('.song-btn'));
-  const player = document.getElementById('player');
-  const audio = document.getElementById('mp-audio');
-  const playBtn = document.querySelector('.mp-play');
-  const muteBtn = document.querySelector('.mp-mute');
-  const seek = document.querySelector('.mp-seek');
-  const cur = document.querySelector('.mp-current');
-  const dur = document.querySelector('.mp-duration');
-  const title = document.querySelector('.mp-title');
-  const artist = document.querySelector('.mp-artist');
-  let currentIndex = 0;
-
-  const fmt = s => {
-    if (isNaN(s)) return '0:00';
-    const m = Math.floor(s / 60);
-    const ss = Math.floor(s % 60).toString().padStart(2,'0');
-    return `${m}:${ss}`;
-  };
-
-  songs.forEach((btn, index) => {
-    btn.addEventListener('click', () => {
-      const src = btn.dataset.src;
-      const t = btn.textContent;
-      currentIndex = index;
-      audio.src = src;
-      title.textContent = t;
-      player.classList.add('visible');
-      audio.play();
-      playBtn.textContent = '⏸';
-      playBtn.classList.add('playing');
-    });
-  });
-
-  playBtn.addEventListener('click', async () => {
-    if (audio.paused) {
-      await audio.play();
-      playBtn.textContent = '⏸';
-      playBtn.classList.add('playing');
-    } else {
-      audio.pause();
-      playBtn.textContent = '▶';
-      playBtn.classList.remove('playing');
-    }
-  });
-
-  muteBtn.addEventListener('click', () => {
-    audio.muted = !audio.muted;
-    muteBtn.textContent = audio.muted ? '🔈' : '🔊';
-  });
-
-  audio.addEventListener('timeupdate', () => {
-    const p = (audio.currentTime / audio.duration) * 100 || 0;
-    seek.value = p;
-    cur.textContent = fmt(audio.currentTime);
-  });
-
-  seek.addEventListener('input', () => {
-    if (!isNaN(audio.duration)) {
-      audio.currentTime = (seek.value / 100) * audio.duration;
-    }
-  });
-
-  audio.addEventListener('loadedmetadata', () => {
-    dur.textContent = fmt(audio.duration);
-  });
-
-  audio.addEventListener('ended', () => {
-    currentIndex++;
-    if (currentIndex < songs.length) {
-      songs[currentIndex].click();
-    } else {
-      // ✅ переход на следующего исполнителя после последней песни
-      window.location.href = "mother.html";
-    }
-  });
-</script>
-</body>
-</html>
+const fmt=s=>isFinite(s)?`${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`:'0:00';
+const rows=[...document.querySelectorAll('.row')];
+const audio=document.getElementById('audio');
+const playBtn=document.getElementById('playBtn');
+const nextBtn=document.getElementById('nextBtn');
+const prevBtn=document.getElementById('prevBtn');
+const muteBtn=document.getElementById('muteBtn');
+const seek=document.getElementById('seek');
+const cur=document.getElementById('curTime');
+const dur=document.getElementById('durTime');
+const vol=document.getElementById('vol');
+const

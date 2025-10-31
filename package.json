@@ -1,0 +1,25 @@
+{
+  "name": "music-web-main",
+  "version": "1.0.0",
+  "description": "Музыкальный сайт с отображением онлайн-пользователей",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neresayte-pixel/music-web.git"
+  },
+  "keywords": ["music", "web", "online-counter"],
+  "author": "neresayte-pixel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neresayte-pixel/music-web/issues"
+  },
+  "homepage": "https://github.com/neresayte-pixel/music-web#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}
